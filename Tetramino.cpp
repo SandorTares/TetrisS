@@ -3,30 +3,29 @@
 //
 
 #include "Tetramino.h"
-coordinates rotateCoordinates(coordinates _coordinates, bool clockwise)
+
+void swap_int(int& a, int& b){
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+void rotateCoordinates(int& x, int& y, bool clockwise)
 {
     if (clockwise)
     {
-        return {_coordinates.y,-_coordinates.x};
+        swap_int(x,y);
+        y=-y;
     }
     else
     {
-        return {-_coordinates.y,_coordinates.x};
+        swap_int(x,y);
+        x=-x;
     }
 }
 
-coordinates addCoordinates(coordinates c1, coordinates c2)
-{
-    return {c1.x+c2.x,c1.y+c2.y};
-}
-void Tetramino::rotateBlocksClockwise() {
+void Tetramino::rotateBlocks(bool clockwise) {
     for (auto & block : blocks) {
-        block.position = rotateCoordinates(block.position, true);
-    }
-}
-
-void Tetramino::rotateBlocksAnticlockwise() {
-    for (auto & block : blocks) {
-        block.position = rotateCoordinates(block.position, false);
+        rotateCoordinates(block.x, block.y, clockwise);
     }
 }

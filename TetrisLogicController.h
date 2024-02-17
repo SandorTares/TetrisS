@@ -24,18 +24,18 @@ class TetrisLogicController {
     Tetramino currentPiece;
 
     Tetramino randomTetramino();
-    bool canMove(coordinates newPositionDelta);
-    bool canRotate();
-    void move(coordinates newPositionDelta);
+    bool canMove(int deltaX, int deltaY);
+    bool canRotate(bool clockwise);
+    void move(int deltaX, int deltaY);
     void moveDown();
-    void rotateClockwise();
-    void setGridCellState(coordinates cellPos, bool filled, bool solid, int color);
-    void setGridCellStateEmpty(coordinates cellPos);
-    void setGridCellStateFilled(coordinates cellPos);
-    void setGridCellStateSolid(coordinates cellPos);
+    void rotate(bool clockwise);
+    void setGridCellState(int x, int y, bool filled, bool solid, int color);
+    void setGridCellStateEmpty(int x, int y);
+    void setGridCellStateFilled(int x, int y);
+    void setGridCellStateSolid(int x, int y);
     void tetraminoPlaced();
     bool isGameOver();
-    grid_cell getGridCellState(coordinates cellPos);
+    grid_cell getGridCellState(int x, int y);
     void putTetramino();
     void solidifyTetramino();
     void removeTetramino();

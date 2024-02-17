@@ -5,119 +5,95 @@
 #ifndef TETRISS_TETRAMINO_H
 #define TETRISS_TETRAMINO_H
 #define TETRAMINO_BLOCKS 4
-struct coordinates{
-    int x,y;
-};
 
 struct block{
-    coordinates position;
+    int x;
+    int y;
 };
-
-coordinates addCoordinates(coordinates c1, coordinates c2);
-coordinates zeroVector();
-coordinates downVector();
-coordinates rightVector();
-coordinates leftVector();
 
 class Tetramino {
 
-    protected:
-    Tetramino(int x, int y)
-    {
-        position.x = x;
-        position.y = y;
-        color = 0;
-    }
 public:
-    void rotateBlocksClockwise();
-    void rotateBlocksAnticlockwise();
+    int x,y;
     int color;
-
-public:
-    coordinates position{};
-    Tetramino()
-    {
-        position.x = 0;
-        position.y = 0;
-        color = 0;
-    }
     block blocks[TETRAMINO_BLOCKS]{};
+    void rotateBlocks(bool clockwise);
+    explicit Tetramino(int _x = 0, int _y = 0, int _color = 0)
+    {
+        x = _x;
+        y = _y;
+        color = _color;
+    }
+
 };
 
 class TetraminoI:public Tetramino
 {
-    public:TetraminoI(int x, int y) : Tetramino(x, y) {
+    public:TetraminoI(int x, int y) : Tetramino(x, y, 5) {
         blocks[0] = {-1, 0};
         blocks[1] = {0,0};
         blocks[2] = {1, 0};
         blocks[3] = {2, 0};
-        color = 5;
     }
 };
 
 class TetraminoO:public Tetramino
 {
-    public:TetraminoO(int x, int y) : Tetramino(x, y) {
+    public:TetraminoO(int x, int y) : Tetramino(x, y,3) {
         blocks[0] = {0, 0};
         blocks[1] = {1,0};
         blocks[2] = {0, 1};
         blocks[3] = {1, 1};
-        color = 3;
     }
 };
 class TetraminoS:public Tetramino
 {
-public:TetraminoS(int x, int y) : Tetramino(x, y) {
+public:TetraminoS(int x, int y) : Tetramino(x, y,4) {
         blocks[0] = {0, 0};
         blocks[1] = {1,0};
         blocks[2] = {0, 1};
         blocks[3] = {-1, 1};
-        color = 4;
     }
 
 };
 
 class TetraminoZ:public Tetramino
 {
-public:TetraminoZ(int x, int y) : Tetramino(x, y) {
+public:TetraminoZ(int x, int y) : Tetramino(x, y,1) {
         blocks[0] = {-1, 0};
         blocks[1] = {0,0};
         blocks[2] = {0, 1};
         blocks[3] = {1, 1};
-        color = 1;
     }
 
 };
 
 class TetraminoL:public Tetramino
 {
-public:TetraminoL(int x, int y) : Tetramino(x, y) {
+public:TetraminoL(int x, int y) : Tetramino(x, y,2) {
         blocks[0] = {-1, 0};
         blocks[1] = {0,0};
         blocks[2] = {1, 0};
         blocks[3] = {-1, 1};
-        color = 2;
     }
 };
 class Tetraminol:public Tetramino
 {
-public:Tetraminol(int x, int y) : Tetramino(x, y) {
+public:Tetraminol(int x, int y) : Tetramino(x, y,6) {
         blocks[0] = {-1, 0};
         blocks[1] = {0,0};
         blocks[2] = {1, 0};
         blocks[3] = {1, 1};
-        color = 6;
     }
 };
 
 class TetraminoT:public Tetramino
 {
-public:TetraminoT(int x, int y) : Tetramino(x, y) {
+public:TetraminoT(int x, int y) : Tetramino(x, y,7) {
         blocks[0] = {-1, 0};
         blocks[1] = {0,0};
         blocks[2] = {1, 0};
         blocks[3] = {0, 1};
-        color = 7;
     }
 };
 #endif //TETRISS_TETRAMINO_H
