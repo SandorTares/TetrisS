@@ -8,9 +8,6 @@
 struct coordinates{
     int x,y;
 };
-struct coordinatesDouble{
-    double x,y;
-};
 
 struct block{
     coordinates position;
@@ -18,8 +15,6 @@ struct block{
 
 coordinates addCoordinates(coordinates c1, coordinates c2);
 coordinates zeroVector();
-coordinates oneVector();
-coordinates upVector();
 coordinates downVector();
 coordinates rightVector();
 coordinates leftVector();
@@ -27,7 +22,6 @@ coordinates leftVector();
 class Tetramino {
 
     protected:
-    //coordinatesDouble precisePosition{}; ///Continue here
     Tetramino(int x, int y)
     {
         position.x = x;
@@ -45,11 +39,8 @@ public:
     {
         position.x = 0;
         position.y = 0;
-        center.x=0;
-        center.y=0;
         color = 0;
     }
-    coordinatesDouble center{};
     block blocks[TETRAMINO_BLOCKS]{};
 };
 
@@ -60,8 +51,6 @@ class TetraminoI:public Tetramino
         blocks[1] = {0,0};
         blocks[2] = {1, 0};
         blocks[3] = {2, 0};
-        center.x = 0.5;
-        center.y = 0.5;
         color = 5;
     }
 };
@@ -73,8 +62,6 @@ class TetraminoO:public Tetramino
         blocks[1] = {1,0};
         blocks[2] = {0, 1};
         blocks[3] = {1, 1};
-        center.x = 0.5;
-        center.y = 0.5;
         color = 3;
     }
 };
@@ -85,8 +72,6 @@ public:TetraminoS(int x, int y) : Tetramino(x, y) {
         blocks[1] = {1,0};
         blocks[2] = {0, 1};
         blocks[3] = {-1, 1};
-        center.x = 0;
-        center.y = 1;
         color = 4;
     }
 
@@ -99,8 +84,6 @@ public:TetraminoZ(int x, int y) : Tetramino(x, y) {
         blocks[1] = {0,0};
         blocks[2] = {0, 1};
         blocks[3] = {1, 1};
-        center.x = 0;
-        center.y = 1;
         color = 1;
     }
 
@@ -113,8 +96,6 @@ public:TetraminoL(int x, int y) : Tetramino(x, y) {
         blocks[1] = {0,0};
         blocks[2] = {1, 0};
         blocks[3] = {-1, 1};
-        center.x = 0;
-        center.y = 0;
         color = 2;
     }
 };
@@ -125,8 +106,6 @@ public:Tetraminol(int x, int y) : Tetramino(x, y) {
         blocks[1] = {0,0};
         blocks[2] = {1, 0};
         blocks[3] = {1, 1};
-        center.x = 0;
-        center.y = 0;
         color = 6;
     }
 };
@@ -138,8 +117,6 @@ public:TetraminoT(int x, int y) : Tetramino(x, y) {
         blocks[1] = {0,0};
         blocks[2] = {1, 0};
         blocks[3] = {0, 1};
-        center.x = 0;
-        center.y = 0;
         color = 7;
     }
 };

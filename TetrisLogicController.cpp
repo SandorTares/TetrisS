@@ -29,33 +29,28 @@ Tetramino TetrisLogicController::randomTetramino() {
 }
 
 coordinates zeroVector(){
-    coordinates temp{0,0};
-    return temp;
+    return {0,0};
 }
 coordinates rightVector()
 {
-    coordinates temp{1,0};
-    return temp;
+    return {1,0};
+
 }
 coordinates leftVector()
 {
-    coordinates temp{-1,0};
-    return temp;
+    return {-1,0};
 }
 coordinates downVector()
 {
-    coordinates temp{0,1};
-    return temp;
+    return {0,1};
 }
 coordinates upVector()
 {
-    coordinates temp{0,-1};
-    return temp;
+    return {0,-1};
 }
 coordinates oneVector()
 {
-    coordinates temp{1,1};
-    return temp;
+    return {1,1};
 }
 
 tetraminoSet shuffleSet(tetraminoSet _set){
@@ -129,19 +124,10 @@ void TetrisLogicController::tetraminoPlaced() {
 
 
 void TetrisLogicController::rotateClockwise() {
-    if(canRotate(true))
+    if(canRotate())
     {
         removeTetramino();
         currentPiece.rotateBlocksClockwise();
-        putTetramino();
-    }
-}
-
-void TetrisLogicController::rotateAnticlockwise() {
-    if(canRotate(false))
-    {
-        removeTetramino();
-        currentPiece.rotateBlocksAnticlockwise();
         putTetramino();
     }
 }
@@ -168,21 +154,12 @@ void TetrisLogicController::solidifyTetramino() {
     }
 }
 
-bool TetrisLogicController::canRotate(bool clockwise) {
+bool TetrisLogicController::canRotate() {
 
     bool temp;
-    if (clockwise)
-    {
         currentPiece.rotateBlocksClockwise();
         temp = canMove(zeroVector());
         currentPiece.rotateBlocksAnticlockwise();
-    }
-    else {
-        currentPiece.rotateBlocksAnticlockwise();
-        temp = canMove(zeroVector());
-        currentPiece.rotateBlocksClockwise();
-    }
-
     return temp;
 }
 

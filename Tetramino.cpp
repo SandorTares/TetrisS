@@ -3,34 +3,30 @@
 //
 
 #include "Tetramino.h"
-coordinates rotateCoordinates(coordinates _coordinates, coordinatesDouble origin, bool clockwise)
+coordinates rotateCoordinates(coordinates _coordinates, bool clockwise)
 {
-    coordinates rotatedCoords{};
     if (clockwise)
     {
-    rotatedCoords.x = (int) ((double)(_coordinates.y-origin.y)+origin.x);
-    rotatedCoords.y = (int) ((double)-(_coordinates.x-origin.x)+origin.y);
-    } else
-    {
-        rotatedCoords.x = (int) ((double) -(_coordinates.y-origin.y)+origin.x);
-        rotatedCoords.y = (int) ((double) (_coordinates.x-origin.x)+origin.y);
+        return {_coordinates.y,-_coordinates.x};
     }
-    return rotatedCoords;
+    else
+    {
+        return {-_coordinates.y,_coordinates.x};
+    }
 }
 
 coordinates addCoordinates(coordinates c1, coordinates c2)
 {
-    coordinates temp{c1.x+c2.x,c1.y+c2.y};
-    return temp;
+    return {c1.x+c2.x,c1.y+c2.y};
 }
 void Tetramino::rotateBlocksClockwise() {
     for (auto & block : blocks) {
-        block.position = rotateCoordinates(block.position, center, true);
+        block.position = rotateCoordinates(block.position, true);
     }
 }
 
 void Tetramino::rotateBlocksAnticlockwise() {
     for (auto & block : blocks) {
-        block.position = rotateCoordinates(block.position, center, false);
+        block.position = rotateCoordinates(block.position, false);
     }
 }

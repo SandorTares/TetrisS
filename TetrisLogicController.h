@@ -25,11 +25,10 @@ class TetrisLogicController {
 
     Tetramino randomTetramino();
     bool canMove(coordinates newPositionDelta);
-    bool canRotate(bool clockwise);
+    bool canRotate();
     void move(coordinates newPositionDelta);
     void moveDown();
     void rotateClockwise();
-    void rotateAnticlockwise();
     void setGridCellState(coordinates cellPos, bool filled, bool solid, int color);
     void setGridCellStateEmpty(coordinates cellPos);
     void setGridCellStateFilled(coordinates cellPos);
