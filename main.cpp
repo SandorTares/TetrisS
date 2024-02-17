@@ -20,11 +20,11 @@ void startNcurses() //Ncurses initialization
     keypad(stdscr, true);
     timeout(FRAMERATE); //Max wait time between inputs
     if (has_colors()) start_color(); //Start color mode if supported
-    init_pair(1,COLOR_RED, COLOR_BLACK); //Start each color
-    init_pair(2,COLOR_WHITE, COLOR_BLACK);
-    init_pair(3,COLOR_YELLOW, COLOR_BLACK);
-    init_pair(4,COLOR_GREEN, COLOR_BLACK);
-    init_pair(5,COLOR_CYAN, COLOR_BLACK);
-    init_pair(6,COLOR_BLUE, COLOR_BLACK);
-    init_pair(7,COLOR_MAGENTA, COLOR_BLACK);
+    init_pair(RED,COLOR_RED, COLOR_BLACK); //Start each color
+    init_pair(WHITE,COLOR_WHITE, COLOR_BLACK);
+    init_pair(YELLOW,COLOR_YELLOW, COLOR_BLACK);
+    init_pair(GREEN,COLOR_GREEN, COLOR_BLACK);
+    init_pair(CYAN,COLOR_CYAN, COLOR_BLACK);
+    init_pair(BLUE,COLOR_BLUE, COLOR_BLACK);
+    init_pair(MAGENTA,COLOR_MAGENTA, COLOR_BLACK);
 }

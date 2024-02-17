@@ -5,6 +5,13 @@
 #ifndef TETRISS_TETRAMINO_H
 #define TETRISS_TETRAMINO_H
 #define TETRAMINO_BLOCKS 4
+#define RED 1
+#define WHITE 2
+#define YELLOW 3
+#define GREEN 4
+#define CYAN 5
+#define BLUE 6
+#define MAGENTA 7
 
 struct block{
     int x;
@@ -18,7 +25,7 @@ public:
     int color;
     block blocks[TETRAMINO_BLOCKS]{};
     void rotateBlocks(bool clockwise);
-    explicit Tetramino(int _x = 0, int _y = 0, int _color = 0)
+    explicit Tetramino(int _x = 0, int _y = 0, int _color = WHITE)
     {
         x = _x;
         y = _y;
@@ -29,7 +36,7 @@ public:
 
 class TetraminoI:public Tetramino
 {
-    public:TetraminoI(int x, int y) : Tetramino(x, y, 5) {
+    public:TetraminoI(int x, int y) : Tetramino(x, y, CYAN) {
         blocks[0] = {-1, 0};
         blocks[1] = {0,0};
         blocks[2] = {1, 0};
@@ -39,7 +46,7 @@ class TetraminoI:public Tetramino
 
 class TetraminoO:public Tetramino
 {
-    public:TetraminoO(int x, int y) : Tetramino(x, y,3) {
+    public:TetraminoO(int x, int y) : Tetramino(x, y,YELLOW) {
         blocks[0] = {0, 0};
         blocks[1] = {1,0};
         blocks[2] = {0, 1};
@@ -48,7 +55,7 @@ class TetraminoO:public Tetramino
 };
 class TetraminoS:public Tetramino
 {
-public:TetraminoS(int x, int y) : Tetramino(x, y,4) {
+public:TetraminoS(int x, int y) : Tetramino(x, y,GREEN) {
         blocks[0] = {0, 0};
         blocks[1] = {1,0};
         blocks[2] = {0, 1};
@@ -59,7 +66,7 @@ public:TetraminoS(int x, int y) : Tetramino(x, y,4) {
 
 class TetraminoZ:public Tetramino
 {
-public:TetraminoZ(int x, int y) : Tetramino(x, y,1) {
+public:TetraminoZ(int x, int y) : Tetramino(x, y,RED) {
         blocks[0] = {-1, 0};
         blocks[1] = {0,0};
         blocks[2] = {0, 1};
@@ -70,7 +77,7 @@ public:TetraminoZ(int x, int y) : Tetramino(x, y,1) {
 
 class TetraminoL:public Tetramino
 {
-public:TetraminoL(int x, int y) : Tetramino(x, y,2) {
+public:TetraminoL(int x, int y) : Tetramino(x, y,WHITE) {
         blocks[0] = {-1, 0};
         blocks[1] = {0,0};
         blocks[2] = {1, 0};
@@ -79,7 +86,7 @@ public:TetraminoL(int x, int y) : Tetramino(x, y,2) {
 };
 class Tetraminol:public Tetramino
 {
-public:Tetraminol(int x, int y) : Tetramino(x, y,6) {
+public:Tetraminol(int x, int y) : Tetramino(x, y,BLUE) {
         blocks[0] = {-1, 0};
         blocks[1] = {0,0};
         blocks[2] = {1, 0};
@@ -89,7 +96,7 @@ public:Tetraminol(int x, int y) : Tetramino(x, y,6) {
 
 class TetraminoT:public Tetramino
 {
-public:TetraminoT(int x, int y) : Tetramino(x, y,7) {
+public:TetraminoT(int x, int y) : Tetramino(x, y,MAGENTA) {
         blocks[0] = {-1, 0};
         blocks[1] = {0,0};
         blocks[2] = {1, 0};

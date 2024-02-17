@@ -6,6 +6,10 @@
 #define TETRISS_TETRISLOGICCONTROLLER_H
 #define TETRAMINO_VARIATIONS 7
 #define SINGLE_LINE_SCORE 10
+#define LEFT_VECTOR -1,0
+#define RIGHT_VECTOR 1,0
+#define DOWN_VECTOR 0,1
+#define ZERO_VECTOR 0,0
 #include "Tetramino.h"
 #include "Grid.h"
 #include "iostream"

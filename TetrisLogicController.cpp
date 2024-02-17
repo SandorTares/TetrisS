@@ -63,9 +63,9 @@ void TetrisLogicController::move(int deltaX, int deltaY) {
 }
 
 void TetrisLogicController::moveDown() {
-    if (canMove(0,1))
+    if (canMove(DOWN_VECTOR))
     {
-        move(0,1);
+        move(DOWN_VECTOR);
     } else
     {
         solidifyTetramino();
@@ -121,7 +121,7 @@ bool TetrisLogicController::canRotate(bool clockwise) {
 
     bool temp;
         currentPiece.rotateBlocks(clockwise);
-        temp = canMove(0,0);
+        temp = canMove(ZERO_VECTOR);
         currentPiece.rotateBlocks(!clockwise);
     return temp;
 }
@@ -153,11 +153,11 @@ void TetrisLogicController::gameFrame() {
         switch (c) {
             case 'a':
             case 'A':
-                move(-1,0);
+                move(LEFT_VECTOR);
                 break;
             case 'd':
             case 'D':
-                move(1,0);
+                move(RIGHT_VECTOR);
                 break;
             case 'w':
             case 'W':
