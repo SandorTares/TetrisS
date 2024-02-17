@@ -30,9 +30,6 @@ class TetrisLogicController {
     void moveDown();
     void rotate(bool clockwise);
     void setGridCellState(int x, int y, bool filled, bool solid, int color);
-    void setGridCellStateEmpty(int x, int y);
-    void setGridCellStateFilled(int x, int y);
-    void setGridCellStateSolid(int x, int y);
     void tetraminoPlaced();
     bool isGameOver();
     grid_cell getGridCellState(int x, int y);
