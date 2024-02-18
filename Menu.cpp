@@ -4,11 +4,17 @@
 
 #include "Menu.h"
 
+void Menu::drawMenuEntries(int startX, int startY, const char entry1[], const char entry2[], const char entry3[]) {
+    mvprintw(1+startY,startX,entry1);
+    mvprintw(3+startY,startX,entry2);
+    mvprintw(5+startY,startX,entry3);
+}
+
 void Menu::menuLoop() {
     int selected = 0;
     const int options = 3;
     char ch =' ';
-    int middleX=0, middleY=0;
+    int middleX, middleY;
     getmaxyx(stdscr, middleY, middleX);
     middleX = middleX/2.3;
     middleY = middleY/3;
@@ -17,30 +23,16 @@ void Menu::menuLoop() {
         box(stdscr, 0,0);
         switch (selected) {
             case 0:
-                attron(COLOR_PAIR(4));
-                mvprintw(1+middleY,middleX,"-NEW GAME");
-                attroff(COLOR_PAIR(4));
-                mvprintw(3+middleY,middleX,"View Scores");
-                mvprintw(5+middleY,middleX,"Exit");
+                drawMenuEntries(middleX, middleY, MENU_NEWGAME_SELECTED, MENU_SCORES, MENU_EXIT);
                 break;
             case 1:
-                mvprintw(1+middleY,middleX,"New Game");
-                attron(COLOR_PAIR(3));
-                mvprintw(3+middleY,middleX,"-VIEW SCORES");
-                attroff(COLOR_PAIR(3));
-                mvprintw(5+middleY,middleX,"Exit");
+                drawMenuEntries(middleX, middleY, MENU_NEWGAME, MENU_SCORES_SELECTED, MENU_EXIT);
                 break;
             case 2:
-                mvprintw(1+middleY,middleX,"New Game");
-                mvprintw(3+middleY,middleX,"View Scores");
-                attron(COLOR_PAIR(1));
-                mvprintw(5+middleY,middleX,"-EXIT");
-                attroff(COLOR_PAIR(1));
+                drawMenuEntries(middleX, middleY, MENU_NEWGAME, MENU_SCORES, MENU_EXIT_SELECTED);
                 break;
             default:
-                mvprintw(1+middleY,middleX,"New Game");
-                mvprintw(3+middleY,middleX,"View Scores");
-                mvprintw(5+middleY,middleX,"Exit");
+                drawMenuEntries(middleX, middleY, MENU_NEWGAME, MENU_SCORES, MENU_EXIT);
                 break;
         }
         refresh();
@@ -48,12 +40,12 @@ void Menu::menuLoop() {
         switch (ch) {
             case 's':
             case 'S':
-                selected = (selected+=1)%options;
+                selected = (selected+1)%options;
                 clear();
                 break;
             case 'w':
             case 'W':
-                selected = (selected=selected-1+options)%options;
+                selected = (selected-1+options)%options;
                 clear();
                 break;
             default:

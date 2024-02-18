@@ -12,11 +12,11 @@ void TetrisGameRenderer::renderGrid() {
             if (logicController.currentGrid.getCellState(x,y).filled)
             {
                 wattron(gridWindow,COLOR_PAIR(logicController.currentGrid.getCellState(x,y).color));
-                mvwaddstr(gridWindow, y + 1, x * BLOCK_GRAPHIC_WIDTH + 1, filledBlock);
+                mvwaddstr(gridWindow, y + 1, x * BLOCK_GRAPHIC_WIDTH + 1, GRAPHIC_FILLED);
                 wattroff(gridWindow,COLOR_PAIR(logicController.currentGrid.getCellState(x,y).color));
             }
             else{
-                mvwaddstr(gridWindow, y + 1, x * BLOCK_GRAPHIC_WIDTH + 1, emptyBlock);
+                mvwaddstr(gridWindow, y + 1, x * BLOCK_GRAPHIC_WIDTH + 1, GRAPHIC_EMPTY);
             }
         }
     }
@@ -46,35 +46,35 @@ void TetrisGameRenderer::renderScore() {
 void TetrisGameRenderer::renderNextPiece() {
     box(nextPieceWindow, 0, 0);
     mvwaddstr(nextPieceWindow,1, 1, "Next:");
-    for (int i = 0; i < NUMBER_PREDICTION; ++i) {
+    for (int i = 0; i < NUMBER_PREDICTIONS; ++i) {
         switch (logicController.readNextElementSet(i)) {
             case OTetramino:
-                mvwprintw(nextPieceWindow,3+i*3, 1, "%s%s%s%s%s", clearSpace, clearSpace, filledBlock,filledBlock,clearSpace);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s",clearSpace, clearSpace, filledBlock,filledBlock);
+                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHIC_CLEAR, GRAPHIC_CLEAR, GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s",GRAPHIC_CLEAR, GRAPHIC_CLEAR, GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR);
                 break;
             case ITetramino:
-                mvwprintw(nextPieceWindow,3+i*3, 1, "%s%s%s%s%s", clearSpace,filledBlock,filledBlock,filledBlock,filledBlock);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s", clearSpace,clearSpace,clearSpace,clearSpace);
+                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_FILLED);
+                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_CLEAR);
                 break;
             case STetramino:
-                mvwprintw(nextPieceWindow,3+i*3, 1, "%s%s%s%s%s", clearSpace,filledBlock,filledBlock,clearSpace,clearSpace);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s", clearSpace,clearSpace,filledBlock,filledBlock);
+                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR,GRAPHIC_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR);
                 break;
             case ZTetramino:
-                mvwprintw(nextPieceWindow,3+i*3, 1, "%s%s%s%s%s", clearSpace,clearSpace,filledBlock,filledBlock,clearSpace);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s",clearSpace, filledBlock,filledBlock,clearSpace);
+                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s",GRAPHIC_CLEAR, GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR,GRAPHIC_CLEAR);
                 break;
             case LTetramino:
-                mvwprintw(nextPieceWindow,3+i*3, 1, "%s%s%s%s%s", clearSpace,filledBlock,filledBlock,filledBlock,clearSpace);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s",clearSpace, filledBlock,clearSpace,clearSpace);
+                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s",GRAPHIC_CLEAR, GRAPHIC_FILLED,GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_CLEAR);
                 break;
             case lTetramino:
-                mvwprintw(nextPieceWindow,3+i*3, 1, "%s%s%s%s%s", clearSpace,filledBlock,filledBlock,filledBlock,clearSpace);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s", clearSpace,clearSpace,clearSpace,filledBlock);
+                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_FILLED, GRAPHIC_CLEAR);
                 break;
             case TTetramino:
-                mvwprintw(nextPieceWindow,3+i*3, 1, "%s%s%s%s%s", clearSpace,filledBlock,filledBlock,filledBlock,clearSpace);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s", clearSpace,clearSpace,filledBlock,clearSpace);
+                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_FILLED,GRAPHIC_CLEAR, GRAPHIC_CLEAR);
                 break;
             default:
                 break;

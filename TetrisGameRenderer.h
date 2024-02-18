@@ -5,17 +5,17 @@
 #ifndef TETRISS_TETRISGAMERENDERER_H
 #define TETRISS_TETRISGAMERENDERER_H
 #define BLOCK_GRAPHIC_WIDTH 3
-#define NUMBER_PREDICTION 3
+#define NUMBER_PREDICTIONS 3
 #define BORDERS_SIZE 2
+#define GRAPHIC_EMPTY " . "
+#define GRAPHIC_CLEAR "   "
+#define GRAPHIC_FILLED "[#]"
 #include "TetrisLogicController.h"
 
 class TetrisGameRenderer {
     WINDOW *gridWindow;
     WINDOW *scoreWindow;
     WINDOW *nextPieceWindow;
-    char filledBlock[BLOCK_GRAPHIC_WIDTH + 1] {"[#]"};
-    char emptyBlock[BLOCK_GRAPHIC_WIDTH + 1] {" . "};
-    char clearSpace[BLOCK_GRAPHIC_WIDTH + 1] {"   "};
     int posX{0}, posY{0};
 public:TetrisGameRenderer(){
         int gameWindowsWidth, gameWindowsHeight,scoreWindowsWidth,scoreWindowsHeight, predictionWindowsHeight, predictionWindowsWidth;
@@ -24,7 +24,7 @@ public:TetrisGameRenderer(){
         scoreWindowsWidth = (TETRAMINO_BLOCKS+2) * BLOCK_GRAPHIC_WIDTH + BORDERS_SIZE;;
         scoreWindowsHeight = 5 + BORDERS_SIZE;
         predictionWindowsWidth = scoreWindowsWidth;
-        predictionWindowsHeight = BORDERS_SIZE+NUMBER_PREDICTION*3+2;//2 Row:\n
+        predictionWindowsHeight = BORDERS_SIZE + NUMBER_PREDICTIONS * 3 + 2;//2 Row:\n
         gridWindow = newwin(gameWindowsHeight, gameWindowsWidth, posY, posX+scoreWindowsWidth+4);
         scoreWindow = newwin(scoreWindowsHeight, scoreWindowsWidth, posY,posX);
         nextPieceWindow = newwin(predictionWindowsHeight, predictionWindowsWidth, posY + scoreWindowsHeight+BORDERS_SIZE,posX);

@@ -4,28 +4,31 @@
 
 #include "ScoreBoard.h"
 using namespace std;
+
+void validateScore(char score[]){
+    bool containsNumbers = false;
+    for (int i = 0; score[i] != '\0'; ++i) {
+        if (!(score[i] >= '0' && score[i] <= '9')){
+            score[i] = ' ';
+        } else
+        {
+            containsNumbers = true;
+        }
+    }
+    if (!containsNumbers) strcpy(score, "-1");
+}
+
 void ScoreBoard::readHighscores() {
     inputFile.open(saveFilename);
-    char ch = ' ';
-    int counter=0;
-    for (auto & previousScore : previousScores) {
-        previousScore.filled = false;
-        inputFile.get(ch);
-        for (counter = 0; counter < MAX_NAME && !inputFile.eof() && ch!=':'; ++counter) {
-            previousScore.name[counter] = ch;
-            inputFile.get(ch);
-        }
-        previousScore.name[counter] = '\0';
-
-        inputFile.get(ch);
-        for (counter = 0; counter < MAX_NAME && !inputFile.eof() && ch!='\n'; ++counter) {
-            if (ch >= '0' && ch<='9') {
-                previousScore.score[counter] = ch;
-                previousScore.filled = true;
-            }
-                inputFile.get(ch);
-        }
-        previousScore.score[counter] = '\0';
+    char name[MAX_NAME+1] {""};
+    char score[MAX_NAME+1] {""};
+    inputFile.getline(name, MAX_NAME+1, ':');
+    inputFile.getline(score, MAX_NAME+1);
+    while (!inputFile.eof()){
+    validateScore(score);
+    addScore(name, stoi(score));
+    inputFile.getline(name, MAX_NAME+1, ':');
+    inputFile.getline(score, MAX_NAME+1);
     }
     inputFile.close();
 }
@@ -33,30 +36,31 @@ void ScoreBoard::readHighscores() {
 void ScoreBoard::writeHighscore() {
     outputFile.open(saveFilename);
 
-    for (auto & previousScore : previousScores) {
+    for (auto & previousScore : scoresList) {
         if (previousScore.filled)
         {
-            outputFile<<previousScore.name<<':'<<previousScore.score<<'\n';
+            outputFile<<previousScore.name<<":"<<previousScore.score<<'\n';
         }
 
     }
     outputFile.close();
 }
 
-void ScoreBoard::insertScore() {
+void ScoreBoard::addScore(char name[], int score) {
+
     for (int i = 0; i < MAX_NAME; ++i) {
-        if (!previousScores[i].filled) {
-            strcpy(previousScores[i].name, playerName);
-            strcpy(previousScores[i].score, highscore);
-            previousScores[i].filled = true;
+        if (!scoresList[i].filled) {
+            strcpy(scoresList[i].name, name);
+            scoresList[i].score = score;
+            scoresList[i].filled = true;
             return;
         } else {
-            if (stoi(previousScores[i].score) < stoi(highscore)) {
+            if (scoresList[i].score < score) {
                 for (int j = 0; j < MAX_NAME-i; ++j) {
-                    previousScores[MAX_NAME-1-j] = previousScores[MAX_NAME-2-j];
+                    scoresList[MAX_NAME - 1 - j] = scoresList[MAX_NAME - 2 - j];
                 }
-                strcpy(previousScores[i].name, playerName);
-                strcpy(previousScores[i].score, highscore);
+                strcpy(scoresList[i].name, name);
+                scoresList[i].score = score;
                 return;
             }
         }
@@ -64,20 +68,19 @@ void ScoreBoard::insertScore() {
     }
 
 void ScoreBoard::updateScoreBoard(int score) {
-    sprintf(highscore,"%d", score);
     readHighscores();
-    insertName();
-    insertScore();
+    insertName(score);
+    addScore(playerName, score);
     writeHighscore();
 }
 
-void ScoreBoard::insertName() {
+void ScoreBoard::insertName(int score) {
     int nextFreeLetterPos = 6;
     char ch = ' ';
     timeout(-1);
     box(inputWindow,0,0);
     mvwprintw(inputWindow, 1,1,"Name: %s", playerName);
-    mvwprintw(inputWindow, 2,1,"Score: %s", highscore);
+    mvwprintw(inputWindow, 2,1,"Score: %d", score);
     wrefresh(inputWindow);
     while (ch!='\n')
     {
@@ -98,7 +101,7 @@ void ScoreBoard::insertName() {
             wclear(inputWindow);
         }
         mvwprintw(inputWindow, 1,1,"Name: %s", playerName);
-        mvwprintw(inputWindow, 2,1,"Score: %s", highscore);
+        mvwprintw(inputWindow, 2,1,"Score: %d", score);
     }
     timeout(FRAMERATE);
 }
@@ -108,14 +111,11 @@ void ScoreBoard::renderScores() {
     clear();
     refresh();
     box(stdscr,0,0);
-    int middleX=0, middleY=0;
-    getmaxyx(stdscr, middleY, middleX);
-    middleX = middleX/3;
-    middleY = middleY/3;
+    int middleX = getmaxx(stdscr)/3;
     for (int i = 0; i < MAX_NAME; ++i) {
-        if (previousScores[i].filled)
+        if (scoresList[i].filled)
         {
-            mvprintw(3+i*2,middleX,"Name: %s - Score: %s", previousScores[i].name,previousScores[i].score);
+            mvprintw(3+i*2, middleX, "Name: %s - Score: %d", scoresList[i].name, scoresList[i].score);
         }
     }
     attron(COLOR_PAIR(1));
