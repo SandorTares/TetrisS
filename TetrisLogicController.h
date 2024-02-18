@@ -21,7 +21,7 @@ struct tetraminoSet{
     tetraminoType setEntry[TETRAMINO_VARIATIONS];
 };
 
-tetraminoSet shuffleSet(tetraminoSet _set);
+tetraminoSet shuffledSet(tetraminoSet _set);
 
 class TetrisLogicController {
 
@@ -42,9 +42,9 @@ class TetrisLogicController {
     void removeTetramino();
 public:
     TetrisLogicController(){
+        set1 = shuffledSet(set1);
+        set2 = shuffledSet(set2);
         currentPiece = randomTetramino();
-        shuffleSet(set1);
-        shuffleSet(set2);
     }
     void gameFrame();
     Grid currentGrid;

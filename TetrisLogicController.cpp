@@ -28,7 +28,7 @@ Tetramino TetrisLogicController::randomTetramino() {
     }
 }
 
-tetraminoSet shuffleSet(tetraminoSet _set){
+tetraminoSet shuffledSet(tetraminoSet _set){
     for (int i = 0; i < TETRAMINO_VARIATIONS; ++i) {
         std::swap(_set.setEntry[i], _set.setEntry[(i+rand())%TETRAMINO_VARIATIONS]);
     }
@@ -133,7 +133,7 @@ tetraminoType TetrisLogicController::chooseNextElementSet() {
     } else {
         std::swap(set1, set2);
         positionInSet = (positionInSet % TETRAMINO_VARIATIONS) + 1;
-        set2 = shuffleSet(set2);
+        set2 = shuffledSet(set2);
         return set1.setEntry[positionInSet - 1];
     }
 }

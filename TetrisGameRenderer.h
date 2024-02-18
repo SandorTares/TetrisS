@@ -17,7 +17,10 @@ class TetrisGameRenderer {
     WINDOW *scoreWindow;
     WINDOW *nextPieceWindow;
     int posX{0}, posY{0};
-public:TetrisGameRenderer(){
+public:
+    TetrisLogicController logicController;
+    void gameLoop();
+    TetrisGameRenderer(){
         int gameWindowsWidth, gameWindowsHeight,scoreWindowsWidth,scoreWindowsHeight, predictionWindowsHeight, predictionWindowsWidth;
         gameWindowsWidth = GRID_WIDTH * BLOCK_GRAPHIC_WIDTH + BORDERS_SIZE;
         gameWindowsHeight = GRID_HEIGHT + BORDERS_SIZE;
@@ -28,9 +31,10 @@ public:TetrisGameRenderer(){
         gridWindow = newwin(gameWindowsHeight, gameWindowsWidth, posY, posX+scoreWindowsWidth+4);
         scoreWindow = newwin(scoreWindowsHeight, scoreWindowsWidth, posY,posX);
         nextPieceWindow = newwin(predictionWindowsHeight, predictionWindowsWidth, posY + scoreWindowsHeight+BORDERS_SIZE,posX);
+        logicController = TetrisLogicController();
     }
-    TetrisLogicController logicController;
-    void gameLoop();
+
+
 
     void renderGrid();
     void renderScore();
