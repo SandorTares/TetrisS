@@ -4,27 +4,23 @@
 
 #include "Tetramino.h"
 
-void swap_int(int& a, int& b){
-    int temp = a;
-    a = b;
-    b = temp;
-}
+using namespace std;
 
-void rotateCoordinates(int& x, int& y, bool clockwise)
+void rotateCoordinates(int& x, int& y, bool clockwise) //Rotating the given x and y cordinates around (0,0) by 90 degrees, clockwise if clockwise is true, anticlockwise otherwise
 {
     if (clockwise)
     {
-        swap_int(x,y);
+        swap(x,y);
         y=-y;
     }
     else
     {
-        swap_int(x,y);
+        swap(x,y);
         x=-x;
     }
 }
 
-void Tetramino::rotateBlocks(bool clockwise) {
+void Tetramino::rotateBlocks(bool clockwise) {// To rotate the blocks in the desired direction, we simply rotate their coordinates
     for (auto & block : blocks) {
         rotateCoordinates(block.x, block.y, clockwise);
     }

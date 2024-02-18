@@ -11,7 +11,7 @@
 #include "fstream"
 #include "cstring"
 #include "ncurses/ncurses.h"
-#include "iostream"
+#include "Menu.h"
 
 struct highscoreEntry{
     char name[MAX_NAME+1] {""};
@@ -36,7 +36,7 @@ class ScoreBoard {
     void writeHighscore();
     void addScore(char name[], int score);
     void insertName(int score);
-    void updateScoreBoard(int score);
+    void updateScoreBoardFile(int score);
     void renderScores();
 };
 

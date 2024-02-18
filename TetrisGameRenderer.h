@@ -7,9 +7,9 @@
 #define BLOCK_GRAPHIC_WIDTH 3
 #define NUMBER_PREDICTIONS 3
 #define BORDERS_SIZE 2
-#define GRAPHIC_EMPTY " . "
-#define GRAPHIC_CLEAR "   "
-#define GRAPHIC_FILLED "[#]"
+#define GRAPHICS_EMPTY " . "
+#define GRAPHICS_CLEAR "   "
+#define GRAPHICS_FILLED "[#]"
 #include "TetrisLogicController.h"
 
 class TetrisGameRenderer {

@@ -12,11 +12,11 @@ void TetrisGameRenderer::renderGrid() {
             if (logicController.currentGrid.getCellState(x,y).filled)
             {
                 wattron(gridWindow,COLOR_PAIR(logicController.currentGrid.getCellState(x,y).color));
-                mvwaddstr(gridWindow, y + 1, x * BLOCK_GRAPHIC_WIDTH + 1, GRAPHIC_FILLED);
+                mvwaddstr(gridWindow, y + 1, x * BLOCK_GRAPHIC_WIDTH + 1, GRAPHICS_FILLED);
                 wattroff(gridWindow,COLOR_PAIR(logicController.currentGrid.getCellState(x,y).color));
             }
             else{
-                mvwaddstr(gridWindow, y + 1, x * BLOCK_GRAPHIC_WIDTH + 1, GRAPHIC_EMPTY);
+                mvwaddstr(gridWindow, y + 1, x * BLOCK_GRAPHIC_WIDTH + 1, GRAPHICS_EMPTY);
             }
         }
     }
@@ -49,32 +49,32 @@ void TetrisGameRenderer::renderNextPiece() {
     for (int i = 0; i < NUMBER_PREDICTIONS; ++i) {
         switch (logicController.readNextElementSet(i)) {
             case OTetramino:
-                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHIC_CLEAR, GRAPHIC_CLEAR, GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s",GRAPHIC_CLEAR, GRAPHIC_CLEAR, GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR);
                 break;
             case ITetramino:
-                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_FILLED);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_FILLED);
+                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_CLEAR);
                 break;
             case STetramino:
-                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR,GRAPHIC_CLEAR);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR, GRAPHICS_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR);
                 break;
             case ZTetramino:
-                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s",GRAPHIC_CLEAR, GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR,GRAPHIC_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR, GRAPHICS_CLEAR);
                 break;
             case LTetramino:
-                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s",GRAPHIC_CLEAR, GRAPHIC_FILLED,GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_CLEAR);
                 break;
             case lTetramino:
-                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_FILLED, GRAPHIC_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_CLEAR);
                 break;
             case TTetramino:
-                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_FILLED,GRAPHIC_CLEAR);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHIC_CLEAR,GRAPHIC_CLEAR,GRAPHIC_FILLED,GRAPHIC_CLEAR, GRAPHIC_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR);
+                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_CLEAR, GRAPHICS_CLEAR);
                 break;
             default:
                 break;
