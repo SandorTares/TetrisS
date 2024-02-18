@@ -6,13 +6,12 @@
 
 grid_cell emptyCell()
 {
-    grid_cell temp{false, false};
-    return temp;
+    return {false, false};
+
 }
 grid_cell solidCell()
 {
-    grid_cell temp{false, true};
-    return temp;
+    return {false, true};
 }
 
 void Grid::setCellState(int _x, int _y, bool _filled, bool _solid, int _color) {
@@ -30,15 +29,11 @@ void Grid::setRowEmpty(int _y) {
         setCellEmpty(_x,_y);
     }
 }
-void Grid::setGridEmpty() {
-    for (int _y = 0; _y < GRID_HEIGHT; ++_y) {
-        setRowEmpty(_y);
-    }
-}
+
 void Grid::shiftRowsDown(int _starting_y) {
 
     for (int _y = _starting_y; _y > 0; --_y) {
-        copyRow(_y-1, _y);
+        gridY[_y] = gridY[_y-1];
     }
     setRowEmpty(0);
 }
@@ -46,9 +41,6 @@ grid_cell Grid::getCellState(int _x, int _y) {
     if (_y>=GRID_HEIGHT || _x<0 || _x >= GRID_WIDTH) return solidCell();
     if (_y<0) return emptyCell();
     return gridY[_y].gridX[_x];
-}
-void Grid::copyRow(int _from, int _to) {
-    gridY[_to] = gridY[_from];
 }
 
 void Grid::incrementRowFilledCount(int row) {
