@@ -4,10 +4,7 @@
 
 #ifndef TETRISS_TETRISGAMERENDERER_H
 #define TETRISS_TETRISGAMERENDERER_H
-#define BLOCK_GRAPHIC_WIDTH 3
-#define BORDERS_SIZE 2
-#define GRAPHICS_EMPTY " . "
-#define GRAPHICS_FILLED "[#]"
+
 #include "TetrisLogicController.h"
 
 class TetrisGameRenderer {
@@ -20,10 +17,10 @@ public:
     void gameLoop();
     TetrisGameRenderer(){
         int gameWindowsWidth, gameWindowsHeight,scoreWindowsWidth,scoreWindowsHeight, predictionWindowsHeight, predictionWindowsWidth;
-        gameWindowsWidth = GRID_WIDTH * BLOCK_GRAPHIC_WIDTH + BORDERS_SIZE;
-        gameWindowsHeight = GRID_HEIGHT + BORDERS_SIZE;
-        scoreWindowsWidth = (TETRAMINO_BLOCKS+2) * BLOCK_GRAPHIC_WIDTH + BORDERS_SIZE;;
-        scoreWindowsHeight = 5 + BORDERS_SIZE;
+        gameWindowsWidth = GRID_WIDTH * GRAPHICS_BLOCK_WIDTH + GRAPHICS_BORDERS_SIZE;
+        gameWindowsHeight = GRID_HEIGHT + GRAPHICS_BORDERS_SIZE;
+        scoreWindowsWidth = (TETRAMINO_BLOCKS+2) * GRAPHICS_BLOCK_WIDTH + GRAPHICS_BORDERS_SIZE;;
+        scoreWindowsHeight = 5 + GRAPHICS_BORDERS_SIZE;
         gridWindow = newwin(gameWindowsHeight, gameWindowsWidth, posY, posX+scoreWindowsWidth+4);
         scoreWindow = newwin(scoreWindowsHeight, scoreWindowsWidth, posY,posX);
      logicController = TetrisLogicController();

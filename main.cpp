@@ -18,7 +18,7 @@ void startNcurses() //Ncurses initialization
     noecho(); //No text shown when input is pressed
     curs_set(0); //No text cursor (blinking line)
     keypad(stdscr, true);
-    timeout(FRAMERATE); //Max wait time between inputs
+    timeout(GAME_FRAMERATE); //Max wait time between inputs
     if (has_colors()) start_color(); //Start color mode if supported
     init_pair(GRAPHICS_RED, COLOR_RED, COLOR_BLACK); //Start each color
     init_pair(GRAPHICS_WHITE, COLOR_WHITE, COLOR_BLACK);

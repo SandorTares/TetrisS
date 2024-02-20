@@ -20,15 +20,15 @@ void validateScore(char score[]){ //Checks to make sure that the score string is
 
 void ScoreBoard::readHighscores() { //Reads the input file and adding the name and score pairs in the scoreList array
     inputFile.open(saveFilename);
-    char name[MAX_NAME+1] {""};
-    char score[MAX_NAME+1] {""};
-    inputFile.getline(name, MAX_NAME+1, ':');
-    inputFile.getline(score, MAX_NAME+1);
+    char name[SCORE_MAX_NAME + 1] {""};
+    char score[SCORE_MAX_NAME + 1] {""};
+    inputFile.getline(name, SCORE_MAX_NAME + 1, ':');
+    inputFile.getline(score, SCORE_MAX_NAME + 1);
     while (!inputFile.eof()){
     validateScore(score);
     addScore(name, stoi(score));
-    inputFile.getline(name, MAX_NAME+1, ':');
-    inputFile.getline(score, MAX_NAME+1);
+    inputFile.getline(name, SCORE_MAX_NAME + 1, ':');
+    inputFile.getline(score, SCORE_MAX_NAME + 1);
     }
     inputFile.close();
 }
@@ -48,7 +48,7 @@ void ScoreBoard::writeHighscore() {//Simple printing to file of the names and sc
 
 void ScoreBoard::addScore(char name[], int score) {
 
-    for (int i = 0; i < MAX_NAME; ++i) {
+    for (int i = 0; i < SCORE_MAX_NAME; ++i) {
         if (!scoresList[i].filled) { //if the slot is free, put the score entry there
             strcpy(scoresList[i].name, name);
             scoresList[i].score = score;
@@ -56,8 +56,8 @@ void ScoreBoard::addScore(char name[], int score) {
             return;
         } else {
             if (scoresList[i].score < score) { //otherwise check which score is higher
-                for (int j = 0; j < MAX_NAME-i; ++j) {
-                    scoresList[MAX_NAME - 1 - j] = scoresList[MAX_NAME - 2 - j]; //if the new score is higher, shift the scores down
+                for (int j = 0; j < SCORE_MAX_NAME - i; ++j) {
+                    scoresList[SCORE_MAX_NAME - 1 - j] = scoresList[SCORE_MAX_NAME - 2 - j]; //if the new score is higher, shift the scores down
                 }
                 strcpy(scoresList[i].name, name);
                 scoresList[i].score = score;
@@ -90,7 +90,7 @@ void ScoreBoard::insertName(int score) {
         ch = getch();
         if (((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')))//To simplify formating, we only accept letters
         {
-            if (nextFreeLetterPos < MAX_NAME ){
+            if (nextFreeLetterPos < SCORE_MAX_NAME ){
             playerName[nextFreeLetterPos] = ch;
             nextFreeLetterPos++;
             }
@@ -103,7 +103,7 @@ void ScoreBoard::insertName(int score) {
         mvwprintw(inputWindow, 1,1,"Name: %s", playerName);
         mvwprintw(inputWindow, 2,1,"Score: %d", score);
     }
-    timeout(FRAMERATE); //Reset timeout
+    timeout(GAME_FRAMERATE); //Reset timeout
 }
 
 void ScoreBoard::renderScores() {
@@ -112,14 +112,14 @@ void ScoreBoard::renderScores() {
     refresh();
     box(stdscr,0,0);
     int middleX = getmaxx(stdscr)/3;
-    for (int i = 0; i < MAX_NAME; ++i) {
+    for (int i = 0; i < SCORE_MAX_NAME; ++i) {
         if (scoresList[i].filled)
         {
             mvprintw(3+i*2, middleX, "Name: %s - Score: %d", scoresList[i].name, scoresList[i].score);
         }
     }
     attron(COLOR_PAIR(1));
-        mvprintw(5+MAX_NAME*2,middleX*1.5,MENU_EXIT_SELECTED);
+        mvprintw(5 + SCORE_MAX_NAME * 2, middleX * 1.5, MENU_EXIT_SELECTED);
     attroff(COLOR_PAIR(1));
     refresh();
     char ch = ' ';

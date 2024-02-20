@@ -5,14 +5,7 @@
 #ifndef TETRISS_TETRAMINO_H
 #define TETRISS_TETRAMINO_H
 #include "iostream"
-#define TETRAMINO_BLOCKS 4
-#define GRAPHICS_RED 1
-#define GRAPHICS_WHITE 2
-#define GRAPHICS_YELLOW 3
-#define GRAPHICS_GREEN 4
-#define GRAPHICS_CYAN 5
-#define GRAPHICS_BLUE 6
-#define GRAPHICS_MAGENTA 7
+#include "GlobalVariables.h"
 
 struct block{ //The blocks that make a tetramino
     int x; //The x and y position of the block relative to the origin of the tetramino

@@ -18,5 +18,6 @@ add_executable(TetrisS main.cpp
         ScoreBoard.h
         Menu.cpp
         Menu.h
+        GlobalVariables.h
 )
 target_link_libraries( TetrisS ${CURSES_LIBRARIES} )

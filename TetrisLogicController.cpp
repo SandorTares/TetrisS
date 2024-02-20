@@ -51,9 +51,9 @@ void TetrisLogicController::move(int deltaX, int deltaY) {
 }
 
 void TetrisLogicController::moveDown() {
-    if (canMove(DOWN_VECTOR))
+    if (canMove(VECTOR_DOWN))
     {
-        move(DOWN_VECTOR);
+        move(VECTOR_DOWN);
     } else
     {
         solidifyTetramino();
@@ -63,13 +63,12 @@ void TetrisLogicController::moveDown() {
 }
 
 void TetrisLogicController::tetraminoPlaced() {
-    int scoreMultiplier;
     for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
         currentGrid.incrementRowFilledCount(currentPiece.getBlock(i).y+currentPiece.getY());
     }
-    scoreMultiplier = currentGrid.emptyFilledRows(); // Score
-    completedLines+=scoreMultiplier;
-    score+= scoreMultiplier*scoreMultiplier*SINGLE_LINE_SCORE;
+    int filledLines = currentGrid.emptyFilledRows(); // Score
+    completedLines+=filledLines;
+    score+= filledLines * filledLines * SCORE_SINGLE_LINE;
     currentPiece = randomTetramino();
 }
 
@@ -109,7 +108,7 @@ bool TetrisLogicController::canRotate(bool clockwise) {
 
     bool temp;
         currentPiece.rotateBlocks(clockwise);
-        temp = canMove(ZERO_VECTOR);
+        temp = canMove(VECTOR_ZERO);
         currentPiece.rotateBlocks(!clockwise);
     return temp;
 }
@@ -121,11 +120,11 @@ void TetrisLogicController::gameFrame() {
         switch (c) {
             case 'a':
             case 'A':
-                move(LEFT_VECTOR);
+                move(VECTOR_LEFT);
                 break;
             case 'd':
             case 'D':
-                move(RIGHT_VECTOR);
+                move(VECTOR_RIGHT);
                 break;
             case 'w':
             case 'W':

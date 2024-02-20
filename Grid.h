@@ -4,8 +4,7 @@
 
 #ifndef TETRISS_GRID_H
 #define TETRISS_GRID_H
-#define GRID_WIDTH 10
-#define GRID_HEIGHT 20
+#include "GlobalVariables.h"
 
 
 struct grid_cell{
