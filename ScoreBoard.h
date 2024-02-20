@@ -18,7 +18,6 @@ struct highscoreEntry{
 class ScoreBoard {
 protected:
  char playerName[SCORE_MAX_NAME + 1]{"Player"};
- char saveFilename[SCORE_MAX_NAME + 1]{"save.tto"};
  WINDOW *inputWindow;
  std::ifstream inputFile;
  std::ofstream outputFile;

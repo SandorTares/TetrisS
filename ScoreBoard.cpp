@@ -19,7 +19,7 @@ void validateScore(char score[]){ //Checks to make sure that the score string is
 }
 
 void ScoreBoard::readHighscores() { //Reads the input file and adding the name and score pairs in the scoreList array
-    inputFile.open(saveFilename);
+    inputFile.open(GAME_SAVE_NAME);
     char name[SCORE_MAX_NAME + 1] {""};
     char score[SCORE_MAX_NAME + 1] {""};
     inputFile.getline(name, SCORE_MAX_NAME + 1, ':');
@@ -34,7 +34,7 @@ void ScoreBoard::readHighscores() { //Reads the input file and adding the name a
 }
 
 void ScoreBoard::writeHighscore() {//Simple printing to file of the names and scores
-    outputFile.open(saveFilename);
+    outputFile.open(GAME_SAVE_NAME);
 
     for (auto & previousScore : scoresList) {
         if (previousScore.filled)

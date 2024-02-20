@@ -1,5 +1,6 @@
 #include "Menu.h"
 #include "ctime"
+
 void startNcurses();
 
 int main() {

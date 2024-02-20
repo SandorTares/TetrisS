@@ -8,6 +8,7 @@
 
 /*Game*/
 #define GAME_FRAMERATE 300
+#define GAME_SAVE_NAME "save.tto"
 
 /*Grid*/
 #define GRID_WIDTH 10
