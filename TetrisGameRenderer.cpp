@@ -30,7 +30,6 @@ void TetrisGameRenderer::gameLoop() {
         refresh();
         renderGrid();
         renderScore();
-        renderNextPiece();
     }
 }
 
@@ -43,46 +42,6 @@ void TetrisGameRenderer::renderScore() {
     wrefresh(scoreWindow);
 }
 
-void TetrisGameRenderer::renderNextPiece() {
-    box(nextPieceWindow, 0, 0);
-    mvwaddstr(nextPieceWindow,1, 1, "Next:");
-    for (int i = 0; i < NUMBER_PREDICTIONS; ++i) {
-        switch (logicController.readNextElementSet(i)) {
-            case OTetramino:
-                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR);
-                break;
-            case ITetramino:
-                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_FILLED);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_CLEAR);
-                break;
-            case STetramino:
-                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR, GRAPHICS_CLEAR);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR);
-                break;
-            case ZTetramino:
-                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR, GRAPHICS_CLEAR);
-                break;
-            case LTetramino:
-                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_CLEAR);
-                break;
-            case lTetramino:
-                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_CLEAR);
-                break;
-            case TTetramino:
-                mvwprintw(nextPieceWindow,3+i*3  , 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_FILLED, GRAPHICS_CLEAR);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s%s", GRAPHICS_CLEAR, GRAPHICS_CLEAR, GRAPHICS_FILLED, GRAPHICS_CLEAR, GRAPHICS_CLEAR);
-                break;
-            default:
-                break;
-        }
-    }
-    wrefresh(nextPieceWindow);
-}
-
 void TetrisGameRenderer::destroyWindows() {
         wclear(gridWindow);
         wrefresh(gridWindow);
@@ -90,7 +49,4 @@ void TetrisGameRenderer::destroyWindows() {
         wclear(scoreWindow);
         wrefresh(scoreWindow);
         delwin(scoreWindow);
-        wclear(nextPieceWindow);
-        wrefresh(nextPieceWindow);
-        delwin(nextPieceWindow);
 }

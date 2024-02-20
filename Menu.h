@@ -14,7 +14,7 @@
 #define MENU_EXIT_SELECTED "-> END GAME"
 
 class Menu {
-
+protected:
     void doGameLoop();
     void updateScores(int newScore);
     void drawMenuEntries(int startX, int startY, const char entry1[], const char entry2[], const char entry3[]);

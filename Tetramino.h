@@ -21,10 +21,16 @@ struct block{ //The blocks that make a tetramino
 
 class Tetramino {
 
-public:
+protected:
     int x,y; //The x and y position of the origin of the tetramino
     int color; //The color of a tetramino
     block blocks[TETRAMINO_BLOCKS]{}; //The array of blocks that make a tetramino, usually 4
+public:
+    int getX();
+    int getY();
+    int getColor();
+    block getBlock(int n);
+    void setXY(int newX, int newY, bool relative);
     void rotateBlocks(bool clockwise); //Function to rotate the tetramino
     explicit Tetramino(int _x = 0, int _y = 0, int _color = GRAPHICS_WHITE)
     {

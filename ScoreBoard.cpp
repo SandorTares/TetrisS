@@ -67,10 +67,10 @@ void ScoreBoard::addScore(char name[], int score) {
     }
     }
 
-void ScoreBoard::updateScoreBoardFile(int score) {
+void ScoreBoard::updateScoreBoardFile(int newScore) {
     readHighscores();//Read the scores from the save file
-    insertName(score);//Get the name of the new score
-    addScore(playerName, score);//Add score to the array if possible
+    insertName(newScore);//Get the name of the new newScore
+    addScore(playerName, newScore);//Add newScore to the array if possible
     writeHighscore();//Write the new scores to the file
 }
 

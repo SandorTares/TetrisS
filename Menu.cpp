@@ -76,7 +76,6 @@ void Menu::doGameLoop()
     TetrisGameRenderer gameRenderer = TetrisGameRenderer(); //Create the game renderer
     gameRenderer.renderGrid(); //Render the initial grid
     gameRenderer.renderScore(); //Render the initial game score
-    gameRenderer.renderNextPiece(); //Render the next piece window
     gameRenderer.gameLoop(); //Start game loop
     gameRenderer.destroyWindows(); //After game loop destroy the game windows
     updateScores(gameRenderer.logicController.score); //Update the scores

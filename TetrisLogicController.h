@@ -16,17 +16,9 @@
 #include "ncurses/ncurses.h"
 #include "cmath"
 
-enum tetraminoType {TTetramino, ITetramino, OTetramino, LTetramino, lTetramino, STetramino, ZTetramino};
-struct tetraminoSet{
-    tetraminoType setEntry[TETRAMINO_VARIATIONS];
-};
-
-tetraminoSet shuffledSet(tetraminoSet _set);
-
 class TetrisLogicController {
-
+protected:
     Tetramino currentPiece;
-
     Tetramino randomTetramino();
     bool canMove(int deltaX, int deltaY);
     bool canRotate(bool clockwise);
@@ -36,14 +28,11 @@ class TetrisLogicController {
     void setGridCellState(int x, int y, bool filled, bool solid, int color);
     void tetraminoPlaced();
     bool isGameOver();
-    grid_cell getGridCellState(int x, int y);
     void putTetramino();
     void solidifyTetramino();
     void removeTetramino();
 public:
     TetrisLogicController(){
-        set1 = shuffledSet(set1);
-        set2 = shuffledSet(set2);
         currentPiece = randomTetramino();
     }
     void gameFrame();
@@ -51,11 +40,6 @@ public:
     bool gameOver{false};
     int score{0};
     int completedLines{0};
-    tetraminoSet set1{TTetramino, ITetramino, OTetramino, LTetramino, lTetramino, STetramino, ZTetramino};
-    tetraminoSet set2{TTetramino, ITetramino, OTetramino, LTetramino, lTetramino, STetramino, ZTetramino};
-    int positionInSet{0};
-    tetraminoType chooseNextElementSet();
-    tetraminoType readNextElementSet(int offset);
 };
 
 

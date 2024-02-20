@@ -20,23 +20,24 @@ struct highscoreEntry{
 };
 
 class ScoreBoard {
+protected:
  char playerName[MAX_NAME+1]{"Player"};
  char saveFilename[MAX_NAME+1]{"save.tto"};
  WINDOW *inputWindow;
  std::ifstream inputFile;
  std::ofstream outputFile;
  highscoreEntry scoresList[MAX_SCORE_ENTRIES]{};
-    public:ScoreBoard(){
+ void readHighscores();
+ void writeHighscore();
+ void addScore(char name[], int score);
+ void insertName(int score);
+
+public:
+    ScoreBoard(){
      inputWindow = newwin(4, MAX_NAME*3, 0,0);
     }
-
-
     void deleteWindows();
-    void readHighscores();
-    void writeHighscore();
-    void addScore(char name[], int score);
-    void insertName(int score);
-    void updateScoreBoardFile(int score);
+    void updateScoreBoardFile(int newScore);
     void renderScores();
 };
 

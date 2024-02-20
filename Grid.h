@@ -6,6 +6,8 @@
 #define TETRISS_GRID_H
 #define GRID_WIDTH 10
 #define GRID_HEIGHT 20
+
+
 struct grid_cell{
     bool filled{false}, solid{false};
     int color{0};
@@ -21,7 +23,7 @@ grid_cell solidCell();
 
 class Grid {
 
-private:
+protected:
     grid_row gridY[GRID_HEIGHT]{};
     void setCellEmpty(int _x, int _y);
     void setRowEmpty(int _y);

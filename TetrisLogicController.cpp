@@ -6,21 +6,21 @@
 
 Tetramino TetrisLogicController::randomTetramino() {
     int spawnX = GRID_WIDTH / 2, spawnY = -1;
-    switch (chooseNextElementSet()) {
+    switch (rand()%TETRAMINO_VARIATIONS) {
 
-        case OTetramino:
+        case 0:
             return TetraminoO(spawnX, spawnY);
-        case ITetramino:
+        case 1:
             return TetraminoI(spawnX, spawnY);
-        case STetramino:
+        case 2:
             return TetraminoS(spawnX, spawnY);
-        case ZTetramino:
+        case 3:
             return TetraminoZ(spawnX, spawnY);
-        case LTetramino:
+        case 4:
             return TetraminoL(spawnX, spawnY);
-        case lTetramino:
+        case 5:
             return Tetraminol(spawnX, spawnY);
-        case TTetramino:
+        case 6:
             return TetraminoT(spawnX, spawnY);
         default:
             return TetraminoO(spawnX, spawnY);
@@ -28,24 +28,13 @@ Tetramino TetrisLogicController::randomTetramino() {
     }
 }
 
-tetraminoSet shuffledSet(tetraminoSet _set){
-    for (int i = 0; i < TETRAMINO_VARIATIONS; ++i) {
-        std::swap(_set.setEntry[i], _set.setEntry[(i+rand())%TETRAMINO_VARIATIONS]);
-    }
-    return _set;
-}
-
 bool TetrisLogicController::canMove(int deltaX, int deltaY) {
     bool temp = true;
 
-    for (auto & block : currentPiece.blocks) {
-        temp = temp && !getGridCellState(currentPiece.x + deltaX + block.x, currentPiece.y + deltaY + block.y).solid;
+    for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
+        temp = temp && !currentGrid.getCellState(currentPiece.getX() + deltaX + currentPiece.getBlock(i).x, currentPiece.getY() + deltaY + currentPiece.getBlock(i).y).solid;
     }
     return temp;
-}
-
-grid_cell TetrisLogicController::getGridCellState(int x, int y) {
-    return currentGrid.getCellState(x, y);
 }
 
 void TetrisLogicController::setGridCellState(int x, int y, bool filled, bool solid, int color = 0) {
@@ -56,8 +45,7 @@ void TetrisLogicController::move(int deltaX, int deltaY) {
     if (canMove(deltaX, deltaY))
     {
         removeTetramino();
-        currentPiece.x += deltaX;
-        currentPiece.y += deltaY;
+        currentPiece.setXY(deltaX, deltaY, true);
         putTetramino();
     }
 }
@@ -76,8 +64,8 @@ void TetrisLogicController::moveDown() {
 
 void TetrisLogicController::tetraminoPlaced() {
     int scoreMultiplier;
-    for (auto & block : currentPiece.blocks) {
-        currentGrid.incrementRowFilledCount(block.y+currentPiece.y);
+    for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
+        currentGrid.incrementRowFilledCount(currentPiece.getBlock(i).y+currentPiece.getY());
     }
     scoreMultiplier = currentGrid.emptyFilledRows(); // Score
     completedLines+=scoreMultiplier;
@@ -100,20 +88,20 @@ bool TetrisLogicController::isGameOver() {
 }
 
 void TetrisLogicController::putTetramino() {
-    for (auto & block : currentPiece.blocks) {
-        setGridCellState(currentPiece.x + block.x , currentPiece.y + block.y, true, false, currentPiece.color);
+    for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
+        setGridCellState(currentPiece.getX() + currentPiece.getBlock(i).x , currentPiece.getY() + currentPiece.getBlock(i).y, true, false, currentPiece.getColor());
     }
 }
 
 void TetrisLogicController::removeTetramino() {
-    for (auto & block : currentPiece.blocks) {
-        setGridCellState(currentPiece.x + block.x , currentPiece.y + block.y, false, false);
+    for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
+        setGridCellState(currentPiece.getX() + currentPiece.getBlock(i).x , currentPiece.getY() + currentPiece.getBlock(i).y, false, false);
     }
 }
 
 void TetrisLogicController::solidifyTetramino() {
-    for (auto & block : currentPiece.blocks) {
-        setGridCellState(currentPiece.x + block.x , currentPiece.y + block.y, true, true, currentPiece.color);
+    for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
+        setGridCellState(currentPiece.getX() + currentPiece.getBlock(i).x , currentPiece.getY() + currentPiece.getBlock(i).y, true, true, currentPiece.getColor());
     }
 }
 
@@ -126,26 +114,6 @@ bool TetrisLogicController::canRotate(bool clockwise) {
     return temp;
 }
 
-tetraminoType TetrisLogicController::chooseNextElementSet() {
-    if (positionInSet < TETRAMINO_VARIATIONS) {
-        positionInSet++;
-        return set1.setEntry[positionInSet - 1];
-    } else {
-        std::swap(set1, set2);
-        positionInSet = (positionInSet % TETRAMINO_VARIATIONS) + 1;
-        set2 = shuffledSet(set2);
-        return set1.setEntry[positionInSet - 1];
-    }
-}
-
-tetraminoType TetrisLogicController::readNextElementSet(int offset) {
-    offset = offset%(TETRAMINO_VARIATIONS*2);
-    if (positionInSet+offset < TETRAMINO_VARIATIONS) {
-        return set1.setEntry[positionInSet+offset];
-    } else {
-        return set2.setEntry[ (positionInSet+offset)%TETRAMINO_VARIATIONS];
-    }
-}
 void TetrisLogicController::gameFrame() {
 
         char c = getch();
