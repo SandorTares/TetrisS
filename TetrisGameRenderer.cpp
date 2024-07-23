@@ -11,9 +11,7 @@ void TetrisGameRenderer::renderGrid() {
         for (int x = 0; x < GRID_WIDTH; ++x) {
             if (logicController.currentGrid.getCellState(x,y).filled)
             {
-                wattron(gridWindow,COLOR_PAIR(logicController.currentGrid.getCellState(x,y).color));
                 mvwaddstr(gridWindow, y + 1, x * GRAPHICS_BLOCK_WIDTH + 1, GRAPHICS_FILLED);
-                wattroff(gridWindow,COLOR_PAIR(logicController.currentGrid.getCellState(x,y).color));
             }
             else{
                 mvwaddstr(gridWindow, y + 1, x * GRAPHICS_BLOCK_WIDTH + 1, GRAPHICS_EMPTY);

@@ -18,7 +18,6 @@ protected:
     void move(int deltaX, int deltaY);
     void moveDown();
     void rotate(bool clockwise);
-    void setGridCellState(int x, int y, bool filled, bool solid, int color);
     void tetraminoPlaced();
     bool isGameOver();
     void putTetramino();

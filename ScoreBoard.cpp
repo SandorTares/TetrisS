@@ -118,9 +118,7 @@ void ScoreBoard::renderScores() {
             mvprintw(3+i*2, middleX, "Name: %s - Score: %d", scoresList[i].name, scoresList[i].score);
         }
     }
-    attron(COLOR_PAIR(1));
-        mvprintw(5 + SCORE_MAX_NAME * 2, middleX * 1.5, MENU_EXIT_SELECTED);
-    attroff(COLOR_PAIR(1));
+    mvprintw(5 + SCORE_MAX_NAME * 2, middleX * 1.5, MENU_EXIT_SELECTED);
     refresh();
     char ch = ' ';
     while (ch!='\n')

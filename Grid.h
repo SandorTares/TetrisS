@@ -7,30 +7,29 @@
 #include "GlobalVariables.h"
 
 
-struct grid_cell{
+struct cell{
     bool filled{false}, solid{false};
-    int color{0};
 };
 
-struct grid_row{
-    grid_cell gridX[GRID_WIDTH]{};
-    int filled {false};
+struct cell_row{
+    cell gridColumns[GRID_WIDTH]{}; //X axis
+    int filled {0};
 };
 
-grid_cell emptyCell();
-grid_cell solidCell();
+cell emptyCell();
+cell solidCell();
 
 class Grid {
 
 protected:
-    grid_row gridY[GRID_HEIGHT]{};
+    cell_row gridRows[GRID_HEIGHT]{}; //Y axis
     void setCellEmpty(int _x, int _y);
     void setRowEmpty(int _y);
     void shiftRowsDown(int _starting_y);
 
 public:
-    grid_cell getCellState(int _x, int _y);
-    void setCellState(int _x, int _y, bool _filled, bool _solid, int _color);
+    cell getCellState(int _x, int _y);
+    void setCellState(int _x, int _y, bool _filled, bool _solid);
     void incrementRowFilledCount(int row);
     int emptyFilledRows();
     Grid() = default;

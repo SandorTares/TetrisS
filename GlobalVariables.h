@@ -28,13 +28,6 @@
 #define SCORE_SINGLE_LINE 10
 
 /*Graphics*/
-#define GRAPHICS_RED 1
-#define GRAPHICS_WHITE 2
-#define GRAPHICS_YELLOW 3
-#define GRAPHICS_GREEN 4
-#define GRAPHICS_CYAN 5
-#define GRAPHICS_BLUE 6
-#define GRAPHICS_MAGENTA 7
 #define GRAPHICS_BLOCK_WIDTH 3
 #define GRAPHICS_EMPTY " . "
 #define GRAPHICS_FILLED "[#]"

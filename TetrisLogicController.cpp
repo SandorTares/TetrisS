@@ -32,20 +32,16 @@ bool TetrisLogicController::canMove(int deltaX, int deltaY) {
     bool temp = true;
 
     for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
-        temp = temp && !currentGrid.getCellState(currentPiece.getX() + deltaX + currentPiece.getBlock(i).x, currentPiece.getY() + deltaY + currentPiece.getBlock(i).y).solid;
+        temp = temp && !currentGrid.getCellState(currentPiece.getBlockPos(i).x + deltaX, currentPiece.getBlockPos(i).y + deltaY).solid;
     }
     return temp;
-}
-
-void TetrisLogicController::setGridCellState(int x, int y, bool filled, bool solid, int color = 0) {
-    currentGrid.setCellState(x, y, filled, solid, color);
 }
 
 void TetrisLogicController::move(int deltaX, int deltaY) {
     if (canMove(deltaX, deltaY))
     {
         removeTetramino();
-        currentPiece.setXY(deltaX, deltaY, true);
+        currentPiece.changePos(deltaX, deltaY);
         putTetramino();
     }
 }
@@ -64,7 +60,7 @@ void TetrisLogicController::moveDown() {
 
 void TetrisLogicController::tetraminoPlaced() {
     for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
-        currentGrid.incrementRowFilledCount(currentPiece.getBlock(i).y+currentPiece.getY());
+        currentGrid.incrementRowFilledCount(currentPiece.getBlockPos(i).y);
     }
     int filledLines = currentGrid.emptyFilledRows(); // Score
     completedLines+=filledLines;
@@ -88,19 +84,19 @@ bool TetrisLogicController::isGameOver() {
 
 void TetrisLogicController::putTetramino() {
     for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
-        setGridCellState(currentPiece.getX() + currentPiece.getBlock(i).x , currentPiece.getY() + currentPiece.getBlock(i).y, true, false, currentPiece.getColor());
+        currentGrid.setCellState(currentPiece.getBlockPos(i).x ,currentPiece.getBlockPos(i).y, true, false);
     }
 }
 
 void TetrisLogicController::removeTetramino() {
     for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
-        setGridCellState(currentPiece.getX() + currentPiece.getBlock(i).x , currentPiece.getY() + currentPiece.getBlock(i).y, false, false);
+        currentGrid.setCellState(currentPiece.getBlockPos(i).x ,currentPiece.getBlockPos(i).y, false, false);
     }
 }
 
 void TetrisLogicController::solidifyTetramino() {
     for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
-        setGridCellState(currentPiece.getX() + currentPiece.getBlock(i).x , currentPiece.getY() + currentPiece.getBlock(i).y, true, true, currentPiece.getColor());
+        currentGrid.setCellState(currentPiece.getBlockPos(i).x ,currentPiece.getBlockPos(i).y, true, true);
     }
 }
 
