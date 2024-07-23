@@ -6,25 +6,26 @@
 
 Tetramino TetrisLogicController::randomTetramino() {
     int spawnX = GRID_WIDTH / 2, spawnY = -1;
-    switch (rand()%TETRAMINO_VARIATIONS) {
+    int temp = nextTetramino;
+    nextTetramino = rand()%TETRAMINO_VARIATIONS;
+    switch (temp) {
 
-        case 0:
+        case TETRAMINO_TYPE_O:
             return TetraminoO(spawnX, spawnY);
-        case 1:
+        case TETRAMINO_TYPE_I:
             return TetraminoI(spawnX, spawnY);
-        case 2:
+        case TETRAMINO_TYPE_S:
             return TetraminoS(spawnX, spawnY);
-        case 3:
+        case TETRAMINO_TYPE_Z:
             return TetraminoZ(spawnX, spawnY);
-        case 4:
+        case TETRAMINO_TYPE_L:
             return TetraminoL(spawnX, spawnY);
-        case 5:
+        case TETRAMINO_TYPE_l:
             return Tetraminol(spawnX, spawnY);
-        case 6:
+        case TETRAMINO_TYPE_T:
             return TetraminoT(spawnX, spawnY);
         default:
             return TetraminoO(spawnX, spawnY);
-
     }
 }
 

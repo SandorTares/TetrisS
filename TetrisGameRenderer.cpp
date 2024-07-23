@@ -28,6 +28,7 @@ void TetrisGameRenderer::gameLoop() {
         refresh();
         renderGrid();
         renderScore();
+        renderPrediction();
     }
 }
 
@@ -40,6 +41,51 @@ void TetrisGameRenderer::renderScore() {
     wrefresh(scoreWindow);
 }
 
+void TetrisGameRenderer::renderPrediction() {
+    box(predictionWindow, 0, 0);
+    int drawX = 1, drawY = 1;
+    mvwaddstr(predictionWindow,drawY, drawX, "Next:");
+    drawY+=2;
+    drawX+=5;
+    switch (logicController.nextTetramino) {
+        case TETRAMINO_TYPE_O:
+            mvwaddstr(predictionWindow,drawY,drawX,   "   [#][#]   ");
+            mvwaddstr(predictionWindow,drawY+1,drawX, "   [#][#]   ");
+            break;
+        case TETRAMINO_TYPE_I:
+            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#][#][#]");
+            mvwaddstr(predictionWindow,drawY+1,drawX, "            ");
+            break;
+        case TETRAMINO_TYPE_S:
+            mvwaddstr(predictionWindow,drawY,drawX,   "   [#][#]   ");
+            mvwaddstr(predictionWindow,drawY+1,drawX, "[#][#]      ");
+            break;
+        case TETRAMINO_TYPE_Z:
+            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#]      ");
+            mvwaddstr(predictionWindow,drawY+1,drawX, "   [#][#]   ");
+            break;
+        case TETRAMINO_TYPE_L:
+            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#][#]   ");
+            mvwaddstr(predictionWindow,drawY+1,drawX, "[#]         ");
+            break;
+        case TETRAMINO_TYPE_l:
+            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#][#]   ");
+            mvwaddstr(predictionWindow,drawY+1,drawX, "      [#]   ");
+            break;
+        case TETRAMINO_TYPE_T:
+            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#][#]   ");
+            mvwaddstr(predictionWindow,drawY+1,drawX, "   [#]      ");
+            break;
+        default:
+            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#]      ");
+            mvwaddstr(predictionWindow,drawY+1,drawX, "[#][#]      ");
+            break;
+    }
+
+    wrefresh(predictionWindow);
+}
+
+
 void TetrisGameRenderer::destroyWindows() {
         wclear(gridWindow);
         wrefresh(gridWindow);
@@ -47,4 +93,8 @@ void TetrisGameRenderer::destroyWindows() {
         wclear(scoreWindow);
         wrefresh(scoreWindow);
         delwin(scoreWindow);
+        wclear(predictionWindow);
+        wrefresh(predictionWindow);
+        delwin(predictionWindow);
+
 }

@@ -36,6 +36,13 @@
 /*Tetramino*/
 #define TETRAMINO_BLOCKS 4
 #define TETRAMINO_VARIATIONS 7
+#define TETRAMINO_TYPE_O 0
+#define TETRAMINO_TYPE_I 1
+#define TETRAMINO_TYPE_S 2
+#define TETRAMINO_TYPE_Z 3
+#define TETRAMINO_TYPE_L 4
+#define TETRAMINO_TYPE_l 5
+#define TETRAMINO_TYPE_T 6
 
 /*Vector*/
 #define VECTOR_LEFT -1,0

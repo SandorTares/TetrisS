@@ -25,6 +25,7 @@ protected:
     void removeTetramino();
 public:
     TetrisLogicController(){
+        nextTetramino = rand()%TETRAMINO_VARIATIONS;
         currentPiece = randomTetramino();
     }
     void gameFrame();
@@ -32,6 +33,7 @@ public:
     bool gameOver{false};
     int score{0};
     int completedLines{0};
+    int nextTetramino{0};
 };
 
 
