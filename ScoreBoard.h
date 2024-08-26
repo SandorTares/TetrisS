@@ -4,36 +4,35 @@
 
 #ifndef TETRISS_SCOREBOARD_H
 #define TETRISS_SCOREBOARD_H
-#define MAX_NAME 10
-#define FRAMERATE 300
-#include "fstream"
 #include "cstring"
+#include "fstream"
 #include "ncurses/ncurses.h"
+#include "GlobalVariables.h"
+
 struct highscoreEntry{
-    char name[MAX_NAME+1];
-    char score[MAX_NAME+1];
-    bool filled;
+    char name[SCORE_MAX_NAME + 1] {""};
+    int score {0};
+    bool filled {false};
 };
 
 class ScoreBoard {
- char highscore[MAX_NAME+1]{"0"};
- char playerName[MAX_NAME+1]{"Player"};
- char saveFilename[MAX_NAME+1]{"save.tto"};
+protected:
+ char playerName[SCORE_MAX_NAME + 1]{"Player"};
  WINDOW *inputWindow;
  std::ifstream inputFile;
  std::ofstream outputFile;
- highscoreEntry previousScores[MAX_NAME]{};
-    public:ScoreBoard(){
-     inputWindow = newwin(4, MAX_NAME*3, 0,0);
+ highscoreEntry scoresList[SCORE_MAX_ENTRIES]{};
+ void readHighscores();
+ void writeHighscore();
+ void addScore(char name[], int score);
+ void insertName(int score);
+
+public:
+    ScoreBoard(){
+     inputWindow = newwin(4, SCORE_MAX_NAME * 3, 0, 0);
     }
-
-
     void deleteWindows();
-    void readHighscores();
-    void writeHighscore();
-    void insertScore();
-    void insertName();
-    void updateScoreBoard(int score);
+    void updateScoreBoardFile(int newScore);
     void renderScores();
 };
 

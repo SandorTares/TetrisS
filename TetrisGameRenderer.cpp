@@ -11,12 +11,10 @@ void TetrisGameRenderer::renderGrid() {
         for (int x = 0; x < GRID_WIDTH; ++x) {
             if (logicController.currentGrid.getCellState(x,y).filled)
             {
-                wattron(gridWindow,COLOR_PAIR(logicController.currentGrid.getCellState(x,y).color));
-                mvwaddstr(gridWindow, y + 1, x * BLOCK_GRAPHIC_WIDTH + 1, filledBlock);
-                wattroff(gridWindow,COLOR_PAIR(logicController.currentGrid.getCellState(x,y).color));
+                mvwaddstr(gridWindow, y + 1, x * GRAPHICS_BLOCK_WIDTH + 1, GRAPHICS_FILLED);
             }
             else{
-                mvwaddstr(gridWindow, y + 1, x * BLOCK_GRAPHIC_WIDTH + 1, emptyBlock);
+                mvwaddstr(gridWindow, y + 1, x * GRAPHICS_BLOCK_WIDTH + 1, GRAPHICS_EMPTY);
             }
         }
     }
@@ -30,7 +28,7 @@ void TetrisGameRenderer::gameLoop() {
         refresh();
         renderGrid();
         renderScore();
-        renderNextPiece();
+        renderPrediction();
     }
 }
 
@@ -43,45 +41,50 @@ void TetrisGameRenderer::renderScore() {
     wrefresh(scoreWindow);
 }
 
-void TetrisGameRenderer::renderNextPiece() {
-    box(nextPieceWindow, 0, 0);
-    mvwaddstr(nextPieceWindow,1, 1, "Next:");
-    for (int i = 0; i < NUMBER_PREDICTION; ++i) {
-        switch (logicController.readNextElementSet(i)) {
-            case OTetramino:
-                mvwprintw(nextPieceWindow,3+i*3, 1, "%s%s%s%s%s", clearSpace, clearSpace, filledBlock,filledBlock,clearSpace);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s",clearSpace, clearSpace, filledBlock,filledBlock);
-                break;
-            case ITetramino:
-                mvwprintw(nextPieceWindow,3+i*3, 1, "%s%s%s%s%s", clearSpace,filledBlock,filledBlock,filledBlock,filledBlock);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s", clearSpace,clearSpace,clearSpace,clearSpace);
-                break;
-            case STetramino:
-                mvwprintw(nextPieceWindow,3+i*3, 1, "%s%s%s%s%s", clearSpace,filledBlock,filledBlock,clearSpace,clearSpace);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s", clearSpace,clearSpace,filledBlock,filledBlock);
-                break;
-            case ZTetramino:
-                mvwprintw(nextPieceWindow,3+i*3, 1, "%s%s%s%s%s", clearSpace,clearSpace,filledBlock,filledBlock,clearSpace);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s",clearSpace, filledBlock,filledBlock,clearSpace);
-                break;
-            case LTetramino:
-                mvwprintw(nextPieceWindow,3+i*3, 1, "%s%s%s%s%s", clearSpace,filledBlock,filledBlock,filledBlock,clearSpace);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s",clearSpace, filledBlock,clearSpace,clearSpace);
-                break;
-            case lTetramino:
-                mvwprintw(nextPieceWindow,3+i*3, 1, "%s%s%s%s%s", clearSpace,filledBlock,filledBlock,filledBlock,clearSpace);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s", clearSpace,clearSpace,clearSpace,filledBlock);
-                break;
-            case TTetramino:
-                mvwprintw(nextPieceWindow,3+i*3, 1, "%s%s%s%s%s", clearSpace,filledBlock,filledBlock,filledBlock,clearSpace);
-                mvwprintw(nextPieceWindow,3+i*3+1, 1, "%s%s%s%s", clearSpace,clearSpace,filledBlock,clearSpace);
-                break;
-            default:
-                break;
-        }
+void TetrisGameRenderer::renderPrediction() {
+    box(predictionWindow, 0, 0);
+    int drawX = 1, drawY = 1;
+    mvwaddstr(predictionWindow,drawY, drawX, "Next:");
+    drawY+=2;
+    drawX+=5;
+    switch (logicController.nextTetramino) {
+        case TETRAMINO_TYPE_O:
+            mvwaddstr(predictionWindow,drawY,drawX,   "   [#][#]   ");
+            mvwaddstr(predictionWindow,drawY+1,drawX, "   [#][#]   ");
+            break;
+        case TETRAMINO_TYPE_I:
+            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#][#][#]");
+            mvwaddstr(predictionWindow,drawY+1,drawX, "            ");
+            break;
+        case TETRAMINO_TYPE_S:
+            mvwaddstr(predictionWindow,drawY,drawX,   "   [#][#]   ");
+            mvwaddstr(predictionWindow,drawY+1,drawX, "[#][#]      ");
+            break;
+        case TETRAMINO_TYPE_Z:
+            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#]      ");
+            mvwaddstr(predictionWindow,drawY+1,drawX, "   [#][#]   ");
+            break;
+        case TETRAMINO_TYPE_L:
+            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#][#]   ");
+            mvwaddstr(predictionWindow,drawY+1,drawX, "[#]         ");
+            break;
+        case TETRAMINO_TYPE_l:
+            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#][#]   ");
+            mvwaddstr(predictionWindow,drawY+1,drawX, "      [#]   ");
+            break;
+        case TETRAMINO_TYPE_T:
+            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#][#]   ");
+            mvwaddstr(predictionWindow,drawY+1,drawX, "   [#]      ");
+            break;
+        default:
+            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#]      ");
+            mvwaddstr(predictionWindow,drawY+1,drawX, "[#][#]      ");
+            break;
     }
-    wrefresh(nextPieceWindow);
+
+    wrefresh(predictionWindow);
 }
+
 
 void TetrisGameRenderer::destroyWindows() {
         wclear(gridWindow);
@@ -90,7 +93,8 @@ void TetrisGameRenderer::destroyWindows() {
         wclear(scoreWindow);
         wrefresh(scoreWindow);
         delwin(scoreWindow);
-        wclear(nextPieceWindow);
-        wrefresh(nextPieceWindow);
-        delwin(nextPieceWindow);
+        wclear(predictionWindow);
+        wrefresh(predictionWindow);
+        delwin(predictionWindow);
+
 }

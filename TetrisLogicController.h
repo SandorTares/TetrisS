@@ -4,58 +4,36 @@
 
 #ifndef TETRISS_TETRISLOGICCONTROLLER_H
 #define TETRISS_TETRISLOGICCONTROLLER_H
-#define TETRAMINO_VARIATIONS 7
-#define SINGLE_LINE_SCORE 10
-#include "Tetramino.h"
-#include "Grid.h"
-#include "iostream"
 #include "ncurses/ncurses.h"
-#include "cmath"
-
-enum tetraminoType {TTetramino, ITetramino, OTetramino, LTetramino, lTetramino, STetramino, ZTetramino};
-struct tetraminoSet{
-    tetraminoType setEntry[TETRAMINO_VARIATIONS];
-};
-
-tetraminoSet shuffleSet(tetraminoSet _set);
+#include "GlobalVariables.h"
+#include "Grid.h"
+#include "Tetramino.h"
 
 class TetrisLogicController {
-
+protected:
     Tetramino currentPiece;
-
     Tetramino randomTetramino();
-    bool canMove(coordinates newPositionDelta);
+    bool canMove(int deltaX, int deltaY);
     bool canRotate(bool clockwise);
-    void move(coordinates newPositionDelta);
+    void move(int deltaX, int deltaY);
     void moveDown();
-    void rotateClockwise();
-    void rotateAnticlockwise();
-    void setGridCellState(coordinates cellPos, bool filled, bool solid, int color);
-    void setGridCellStateEmpty(coordinates cellPos);
-    void setGridCellStateFilled(coordinates cellPos);
-    void setGridCellStateSolid(coordinates cellPos);
+    void rotate(bool clockwise);
     void tetraminoPlaced();
     bool isGameOver();
-    grid_cell getGridCellState(coordinates cellPos);
     void putTetramino();
     void solidifyTetramino();
     void removeTetramino();
 public:
     TetrisLogicController(){
+        nextTetramino = rand()%TETRAMINO_VARIATIONS;
         currentPiece = randomTetramino();
-        shuffleSet(set1);
-        shuffleSet(set2);
     }
     void gameFrame();
     Grid currentGrid;
     bool gameOver{false};
     int score{0};
     int completedLines{0};
-    tetraminoSet set1{TTetramino, ITetramino, OTetramino, LTetramino, lTetramino, STetramino, ZTetramino};
-    tetraminoSet set2{TTetramino, ITetramino, OTetramino, LTetramino, lTetramino, STetramino, ZTetramino};
-    int positionInSet{0};
-    tetraminoType chooseNextElementSet();
-    tetraminoType readNextElementSet(int offset);
+    int nextTetramino{0};
 };
 
 
