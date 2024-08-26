@@ -4,7 +4,7 @@
 
 #include "TetrisLogicController.h"
 
-Tetramino TetrisLogicController::randomTetramino() {
+Tetramino TetrisLogicController::randomTetramino() {    //spawn a random generated tetramino
     int spawnX = GRID_WIDTH / 2, spawnY = -1;
     int temp = nextTetramino;
     nextTetramino = rand()%TETRAMINO_VARIATIONS;
@@ -110,7 +110,7 @@ bool TetrisLogicController::canRotate(bool clockwise) {
     return temp;
 }
 
-void TetrisLogicController::gameFrame() {
+void TetrisLogicController::gameFrame() {    //controls panel (press "a" or "A" to move left, etc...)
 
         char c = getch();
 
