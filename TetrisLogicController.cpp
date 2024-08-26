@@ -29,7 +29,7 @@ Tetramino TetrisLogicController::randomTetramino() {    //spawn a random generat
     }
 }
 
-bool TetrisLogicController::canMove(int deltaX, int deltaY) {
+bool TetrisLogicController::canMove(int deltaX, int deltaY) {    //Santino my love
     bool temp = true;
 
     for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
