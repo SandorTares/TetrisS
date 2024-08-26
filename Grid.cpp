@@ -25,6 +25,7 @@ void Grid::setRowEmpty(int _y) {
     for (int _x = 0; _x < GRID_WIDTH; ++_x) {
         setCellEmpty(_x,_y);
     }
+    gridRows[_y].filled = 0;
 }
 
 void Grid::shiftRowsDown(int _starting_y) {
