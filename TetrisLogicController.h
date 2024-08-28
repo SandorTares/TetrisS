@@ -12,28 +12,33 @@
 class TetrisLogicController {
 protected:
     Tetramino currentPiece;
-    Tetramino randomTetramino();
+    Tetramino nextPiece;
+    int score{0};
+    int completedRows{0};
+    bool gameOver{false};
+    void chooseNextTetramino();
+    void changeTetramino();
     bool canMove(int deltaX, int deltaY);
     bool canRotate(bool clockwise);
-    void move(int deltaX, int deltaY);
+    void doMove(int deltaX, int deltaY);
     void moveDown();
-    void rotate(bool clockwise);
-    void tetraminoPlaced();
-    bool isGameOver();
-    void putTetramino();
-    void solidifyTetramino();
-    void removeTetramino();
+    void doRotation(bool clockwise);
+    void doTetraminoPlacement();
+    void makeTetraminoVisible();
+    void makeTetraminoStatic();
+    void eraseTetramino();
+
 public:
     TetrisLogicController(){
-        nextTetramino = rand()%TETRAMINO_VARIATIONS;
-        currentPiece = randomTetramino();
+        chooseNextTetramino();
+        changeTetramino();
     }
     void gameFrame();
     Grid currentGrid;
-    bool gameOver{false};
-    int score{0};
-    int completedLines{0};
-    int nextTetramino{0};
+    int getScore();
+    Tetramino getPrediction();
+    int getCompletedRows();
+    bool isGameOver();
 };
 
 

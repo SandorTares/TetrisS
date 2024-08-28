@@ -5,8 +5,8 @@
 #include "Tetramino.h"
 
 using namespace std;
-
-void rotateCoordinates(int& x, int& y, bool clockwise) //Rotating the given x and y cordinates around (0,0) by 90 degrees, clockwise if clockwise is true, anticlockwise otherwise
+//Rotates the given x and y cordinates around (0,0) by 90 degrees
+void doCoordinateRotation(int& x, int& y, bool clockwise)
 {
     if (clockwise)
     {
@@ -20,16 +20,24 @@ void rotateCoordinates(int& x, int& y, bool clockwise) //Rotating the given x an
     }
 }
 
-void Tetramino::rotateBlocks(bool clockwise) {// To rotate the blocks in the desired direction, we simply rotate their coordinates
+// To rotate the blocks in the desired direction, we simply rotate each set of coordinates
+void Tetramino::doBlocksRotation(bool clockwise) {
     for (auto & block : blocks) {
-        rotateCoordinates(block.x, block.y, clockwise);
+        doCoordinateRotation(block.x, block.y, clockwise);
     }
 }
 
+//Returns the real coordinates of the n-th block
 block Tetramino::getBlockPos(int n) {
     return {blocks[n].x+x, blocks[n].y+y};
 }
 
+//Returns the coordinates relative to the tetramino origin for the n-th block
+block Tetramino::getBlockPosRelative(int n) {
+    return {blocks[n].x, blocks[n].y};
+}
+
+//Changes the position of the tetramino origin
 void Tetramino::changePos(int deltaX, int deltaY) {
         x+=deltaX;
         y+=deltaY;

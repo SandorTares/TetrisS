@@ -4,51 +4,62 @@
 
 #include "Grid.h"
 
-cell emptyCell()
-{
+//Returns the equivalent of an empty cell
+cell emptyCell() {
     return {false, false};
 
 }
-cell solidCell()
-{
+
+//Returns the equivalent of a solid cell, used for the grid walls and floor
+cell solidCell() {
     return {false, true};
 }
 
-void Grid::setCellState(int _x, int _y, bool _filled, bool _solid) {
-    if (_y>=GRID_HEIGHT || _y<0 || _x<0 || _x >= GRID_WIDTH) return;
-    gridRows[_y].gridColumns[_x] = {_filled, _solid};
+//Sets the state of desired grid cell
+void Grid::setCellState(int cellX, int cellY, bool cellFilled, bool cellSolid) {
+    if (cellY >= GRID_HEIGHT || cellY < 0 || cellX < 0 || cellX >= GRID_WIDTH) return;
+    gridAxisY[cellY].gridAxisX[cellX] = {cellFilled, cellSolid};
 }
-void Grid::setCellEmpty(int _x, int _y) {
-    gridRows[_y].gridColumns[_x] = emptyCell();
+
+//Empties the desired grid cell
+void Grid::setCellEmpty(int cellX, int cellY) {
+    gridAxisY[cellY].gridAxisX[cellX] = emptyCell();
 }
-void Grid::setRowEmpty(int _y) {
+
+//Empties the desired grid row
+void Grid::setRowEmpty(int rowY) {
     for (int _x = 0; _x < GRID_WIDTH; ++_x) {
-        setCellEmpty(_x,_y);
+        setCellEmpty(_x, rowY);
     }
-    gridRows[_y].filled = 0;
+    gridAxisY[rowY].filled = 0;
 }
 
-void Grid::shiftRowsDown(int _starting_y) {
+//Shifts all the rows down starting from the indicated y coordinate, used when eleminating filled rows
+void Grid::shiftRowsDown(int startingRowY) {
 
-    for (int _y = _starting_y; _y > 0; --_y) {
-        gridRows[_y] = gridRows[_y - 1];
+    for (int _y = startingRowY; _y > 0; --_y) {
+        gridAxisY[_y] = gridAxisY[_y - 1];
     }
     setRowEmpty(0);
 }
-cell Grid::getCellState(int _x, int _y) {
-    if (_y>=GRID_HEIGHT || _x<0 || _x >= GRID_WIDTH) return solidCell();
-    if (_y<0) return emptyCell();
-    return gridRows[_y].gridColumns[_x];
+
+//Returns the state of the desired grid cell
+cell Grid::getCellState(int cellX, int cellY) {
+    if (cellY >= GRID_HEIGHT || cellX < 0 || cellX >= GRID_WIDTH) return solidCell();
+    if (cellY < 0) return emptyCell();
+    return gridAxisY[cellY].gridAxisX[cellX];
 }
 
+//Changes how filled a row is
 void Grid::incrementRowFilledCount(int row) {
-    gridRows[row].filled+=1;
+    gridAxisY[row].filled+=1;
 }
 
+//Empties all filled rows
 int Grid::emptyFilledRows() {
     int count = 0;
     for (int i = 0; i < GRID_HEIGHT; ++i) {
-        if (gridRows[i].filled >= GRID_WIDTH) {shiftRowsDown(i);
+        if (gridAxisY[i].filled >= GRID_WIDTH) {shiftRowsDown(i);
         count+=1;
         }
     }
