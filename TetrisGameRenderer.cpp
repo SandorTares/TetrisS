@@ -4,6 +4,23 @@
 
 #include "TetrisGameRenderer.h"
 
+//Starts the game screen drawing and executes the game logic using TetrisLogicController
+int TetrisGameRenderer::doGameLoop() {
+    //Clear and refresh screen to prepare it for drawing the game
+    clear();
+    refresh();
+    while (!logicController.isGameOver())
+    {
+        renderGrid(); //Render the game grid
+        renderScore(); //Render the game score
+        renderPrediction();//Render the next piece window
+        logicController.gameFrame();
+    }
+    destroyWindows(); //After game loop destroy the game windows
+    return logicController.getScore();
+}
+
+//Draws the game grid
 void TetrisGameRenderer::renderGrid() {
     box(gridWindow, 0, 0);
 
@@ -21,80 +38,38 @@ void TetrisGameRenderer::renderGrid() {
     wrefresh(gridWindow);
 }
 
-void TetrisGameRenderer::gameLoop() {
-    while (!logicController.gameOver)
-    {
-        logicController.gameFrame();
-        refresh();
-        renderGrid();
-        renderScore();
-        renderPrediction();
-    }
-}
-
+//Draws the current game score
 void TetrisGameRenderer::renderScore() {
     box(scoreWindow, 0, 0);
     mvwaddstr(scoreWindow,1, 1, "Score:");
-    mvwprintw(scoreWindow,2, 1, "%d", logicController.score);
+    mvwprintw(scoreWindow,2, 1, "%d", logicController.getScore());
     mvwaddstr(scoreWindow,4, 1, "Rows:");
-    mvwprintw(scoreWindow,5, 1, "%d", logicController.completedLines);
+    mvwprintw(scoreWindow,5, 1, "%d", logicController.getCompletedRows());
     wrefresh(scoreWindow);
 }
 
+//Draws the next tetramino piece
 void TetrisGameRenderer::renderPrediction() {
+    wclear(predictionWindow);
     box(predictionWindow, 0, 0);
     int drawX = 1, drawY = 1;
     mvwaddstr(predictionWindow,drawY, drawX, "Next:");
-    drawY+=2;
-    drawX+=5;
-    switch (logicController.nextTetramino) {
-        case TETRAMINO_TYPE_O:
-            mvwaddstr(predictionWindow,drawY,drawX,   "   [#][#]   ");
-            mvwaddstr(predictionWindow,drawY+1,drawX, "   [#][#]   ");
-            break;
-        case TETRAMINO_TYPE_I:
-            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#][#][#]");
-            mvwaddstr(predictionWindow,drawY+1,drawX, "            ");
-            break;
-        case TETRAMINO_TYPE_S:
-            mvwaddstr(predictionWindow,drawY,drawX,   "   [#][#]   ");
-            mvwaddstr(predictionWindow,drawY+1,drawX, "[#][#]      ");
-            break;
-        case TETRAMINO_TYPE_Z:
-            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#]      ");
-            mvwaddstr(predictionWindow,drawY+1,drawX, "   [#][#]   ");
-            break;
-        case TETRAMINO_TYPE_L:
-            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#][#]   ");
-            mvwaddstr(predictionWindow,drawY+1,drawX, "[#]         ");
-            break;
-        case TETRAMINO_TYPE_l:
-            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#][#]   ");
-            mvwaddstr(predictionWindow,drawY+1,drawX, "      [#]   ");
-            break;
-        case TETRAMINO_TYPE_T:
-            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#][#]   ");
-            mvwaddstr(predictionWindow,drawY+1,drawX, "   [#]      ");
-            break;
-        default:
-            mvwaddstr(predictionWindow,drawY,drawX,   "[#][#]      ");
-            mvwaddstr(predictionWindow,drawY+1,drawX, "[#][#]      ");
-            break;
+    drawY+=3;
+    drawX+=1;
+    Tetramino prediction = logicController.getPrediction();
+
+    for (int i = 0; i < TETRAMINO_BLOCKS; ++i) {
+        block currentBlock = prediction.getBlockPosRelative(i);
+        mvwaddstr(predictionWindow, drawY+currentBlock.y, (drawX+currentBlock.x)*GRAPHICS_BLOCK_WIDTH, GRAPHICS_FILLED);
     }
 
     wrefresh(predictionWindow);
 }
 
-
+//Clears memory used by the windows to avoid leaks
 void TetrisGameRenderer::destroyWindows() {
-        wclear(gridWindow);
-        wrefresh(gridWindow);
         delwin(gridWindow);
-        wclear(scoreWindow);
-        wrefresh(scoreWindow);
         delwin(scoreWindow);
-        wclear(predictionWindow);
-        wrefresh(predictionWindow);
         delwin(predictionWindow);
-
+        clear();
 }

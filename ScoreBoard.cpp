@@ -5,7 +5,8 @@
 #include "ScoreBoard.h"
 using namespace std;
 
-void validateScore(char score[]){ //Checks to make sure that the score string is a valid number to avoid erros with stoi or set it to -1 if no number is found
+//Checks to make sure that the score string is a valid number to avoid errors or set it to 0 if no number is score
+void correctNonNumberScore(char score[]){
     bool containsNumbers = false;
     for (int i = 0; score[i] != '\0'; ++i) {
         if (!(score[i] >= '0' && score[i] <= '9')){
@@ -15,89 +16,98 @@ void validateScore(char score[]){ //Checks to make sure that the score string is
             containsNumbers = true;
         }
     }
-    if (!containsNumbers) strcpy(score, "-1");
+    if (!containsNumbers) strcpy(score, "0");
 }
 
-void ScoreBoard::readHighscores() { //Reads the input file and adding the name and score pairs in the scoreList array
+//Reads the save file and adds the name and score pairs to the score list
+void ScoreBoard::readScoresFile() {
     inputFile.open(GAME_SAVE_NAME);
     char name[SCORE_MAX_NAME + 1] {""};
     char score[SCORE_MAX_NAME + 1] {""};
-    inputFile.getline(name, SCORE_MAX_NAME + 1, ':');
-    inputFile.getline(score, SCORE_MAX_NAME + 1);
+
     while (!inputFile.eof()){
-    validateScore(score);
-    addScore(name, stoi(score));
-    inputFile.getline(name, SCORE_MAX_NAME + 1, ':');
-    inputFile.getline(score, SCORE_MAX_NAME + 1);
+        inputFile.getline(name, SCORE_MAX_NAME + 1, ':');
+        inputFile.getline(score, SCORE_MAX_NAME + 1);
+        correctNonNumberScore(score);
+        insertScoreToList(name, stoi(score));
     }
     inputFile.close();
 }
 
-void ScoreBoard::writeHighscore() {//Simple printing to file of the names and scores
+//Writes the name and score pairs from the score list to the save file
+void ScoreBoard::writeScoresFile() {//Simple printing to file of the names and scores
     outputFile.open(GAME_SAVE_NAME);
-
-    for (auto & previousScore : scoresList) {
-        if (previousScore.filled)
-        {
-            outputFile<<previousScore.name<<":"<<previousScore.score<<'\n';
-        }
-
+    p_scoreList temp = scoreList;
+    for (int i = 0; i < SCORE_MAX_ENTRIES && temp != nullptr; ++i) {
+            outputFile<<temp->name<<":"<<temp->score<<'\n';
+            temp=temp->next;
     }
     outputFile.close();
 }
 
-void ScoreBoard::addScore(char name[], int score) {
-
-    for (int i = 0; i < SCORE_MAX_NAME; ++i) {
-        if (!scoresList[i].filled) { //if the slot is free, put the score entry there
-            strcpy(scoresList[i].name, name);
-            scoresList[i].score = score;
-            scoresList[i].filled = true;
-            return;
-        } else {
-            if (scoresList[i].score < score) { //otherwise check which score is higher
-                for (int j = 0; j < SCORE_MAX_NAME - i; ++j) {
-                    scoresList[SCORE_MAX_NAME - 1 - j] = scoresList[SCORE_MAX_NAME - 2 - j]; //if the new score is higher, shift the scores down
-                }
-                strcpy(scoresList[i].name, name);
-                scoresList[i].score = score;
-                return;
-            }
-        }
+//Inserts elements in a list while also sorting them
+p_scoreList insertEntry(p_scoreList head, scoreEntry entry){
+    if (head == nullptr) { //Create new list head
+        head = new scoreEntry;
+        (*head) = entry;
+        head->next = nullptr;
+        return head;
     }
+    else if (head->score < entry.score){ //Replace list head
+        p_scoreList temp;
+        temp = head;
+        head = new scoreEntry;
+        (*head) = entry;
+        head->next=temp;
+        return head;
+    } else { //Insert entry in the sublist
+        head->next = insertEntry(head->next, entry);
+        return head;
     }
 
-void ScoreBoard::updateScoreBoardFile(int newScore) {
-    readHighscores();//Read the scores from the save file
-    insertName(newScore);//Get the name of the new newScore
-    addScore(playerName, newScore);//Add newScore to the array if possible
-    writeHighscore();//Write the new scores to the file
 }
 
-void ScoreBoard::insertName(int score) {
-    int nextFreeLetterPos = 6;
-    char ch = ' ';
+//Inserts score entry to the highscore list
+void ScoreBoard::insertScoreToList(char name[], int score) {
+    scoreEntry entry;
+    strcpy(entry.name, name);
+    entry.score = score;
+    scoreList = insertEntry(scoreList, entry);
+
+}
+
+//Gets the newest score after a game, inserts it to the score list and saves the update score list to the save file
+void ScoreBoard::updateScoreFile(int newScore) {
+    insertScoreName(newScore);//Get the name of the new newScore
+    insertScoreToList(playerName, newScore);//Add newScore to the array if possible
+    writeScoresFile();//Write the new scores to the file
+}
+
+//Function used to accept a player name for the most recent score when saving it
+void ScoreBoard::insertScoreName(int score) {
+    char _input = ' ';
     timeout(-1); //Stop timeout so that we wait indefinitely for inputs from the player
     box(inputWindow,0,0);
     mvwprintw(inputWindow, 1,1,"Name: %s", playerName);
     mvwprintw(inputWindow, 2,1,"Score: %d", score);
+    refresh();
     wrefresh(inputWindow);
-    while (ch!='\n')
+    while (_input != '\n')
     {
         box(inputWindow,0,0);
         wrefresh(inputWindow);
 
-        ch = getch();
-        if (((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')))//To simplify formating, we only accept letters
+        _input = getch();
+        if (((_input >= 'a' && _input <= 'z') || (_input >= 'A' && _input <= 'Z')))//To simplify formating, we only accept letters
         {
-            if (nextFreeLetterPos < SCORE_MAX_NAME ){
-            playerName[nextFreeLetterPos] = ch;
-            nextFreeLetterPos++;
+            if (insertedNameLength < SCORE_MAX_NAME ){
+            playerName[insertedNameLength] = _input;
+            insertedNameLength++;
             }
-        } else if (nextFreeLetterPos > 0 && ch!='\n') //Anything other than enter and letters functions as backspace
+        } else if (insertedNameLength > 0 && _input != '\n') //Anything other than enter and letters functions as backspace
         {
-            nextFreeLetterPos--;
-            playerName[nextFreeLetterPos] = '\0';
+            insertedNameLength--;
+            playerName[insertedNameLength] = '\0';
             wclear(inputWindow);
         }
         mvwprintw(inputWindow, 1,1,"Name: %s", playerName);
@@ -106,31 +116,34 @@ void ScoreBoard::insertName(int score) {
     timeout(GAME_FRAMERATE); //Reset timeout
 }
 
+//Draws the top scores to the screen
 void ScoreBoard::renderScores() {
-    readHighscores();
     clear();
-    refresh();
     box(stdscr,0,0);
-    int middleX = getmaxx(stdscr)/3;
-    for (int i = 0; i < SCORE_MAX_NAME; ++i) {
-        if (scoresList[i].filled)
-        {
-            mvprintw(3+i*2, middleX, "Name: %s - Score: %d", scoresList[i].name, scoresList[i].score);
-        }
+    int _draw_middle_x = getmaxx(stdscr) / 3;
+    p_scoreList temp = scoreList;
+
+    for (int i = 0; i < SCORE_MAX_ENTRIES && temp != nullptr; ++i) {
+            mvprintw(3+i*2, _draw_middle_x, "Name: %s - Score: %d", temp->name, temp->score);
+            temp=temp->next;
     }
-    mvprintw(5 + SCORE_MAX_NAME * 2, middleX * 1.5, MENU_EXIT_SELECTED);
-    refresh();
-    char ch = ' ';
-    while (ch!='\n')
-    {
-        ch = getch();
-    }
+    mvprintw(5 + SCORE_MAX_NAME * 2, (int) (_draw_middle_x * 1.5), MENU_EXIT_SELECTED);
+
+    while (getch()!='\n');
     clear();
-    refresh();
 }
 
-void ScoreBoard::deleteWindows() { //Clear and delete windows to avoid memory leaks
-    wclear(inputWindow);
-    wrefresh(inputWindow);
+//Deletes the pointers of the entry list to free memory
+void deleteScoreList(p_scoreList head)
+{
+    if (head == nullptr) return;
+    deleteScoreList(head->next);
+    delete head;
+}
+
+//Delete the window and score list when exiting to avoid memory leaks
+void ScoreBoard::freeMemory() {
     delwin(inputWindow);
+    deleteScoreList(scoreList);
+    scoreList = nullptr;
 }

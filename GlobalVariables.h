@@ -15,6 +15,7 @@
 #define GRID_HEIGHT 20
 
 /*Menu*/
+#define MENU_OPTIONS_NUMBER 3
 #define MENU_NEWGAME "New Game"
 #define MENU_NEWGAME_SELECTED "-> NEW GAME"
 #define MENU_SCORES "View Scoreboard"

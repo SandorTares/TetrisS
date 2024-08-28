@@ -9,30 +9,35 @@
 #include "ncurses/ncurses.h"
 #include "GlobalVariables.h"
 
-struct highscoreEntry{
+struct scoreEntry{
     char name[SCORE_MAX_NAME + 1] {""};
     int score {0};
     bool filled {false};
+    scoreEntry* next = nullptr;
 };
+
+typedef scoreEntry* p_scoreList;
 
 class ScoreBoard {
 protected:
  char playerName[SCORE_MAX_NAME + 1]{"Player"};
+ int insertedNameLength = 6;
  WINDOW *inputWindow;
  std::ifstream inputFile;
  std::ofstream outputFile;
- highscoreEntry scoresList[SCORE_MAX_ENTRIES]{};
- void readHighscores();
- void writeHighscore();
- void addScore(char name[], int score);
- void insertName(int score);
+ p_scoreList scoreList = nullptr;
+ void readScoresFile();
+ void writeScoresFile();
+ void insertScoreToList(char name[], int score);
+ void insertScoreName(int score);
 
 public:
     ScoreBoard(){
      inputWindow = newwin(4, SCORE_MAX_NAME * 3, 0, 0);
+        readScoresFile();//Read the scores from the save file
     }
-    void deleteWindows();
-    void updateScoreBoardFile(int newScore);
+    void freeMemory();
+    void updateScoreFile(int newScore);
     void renderScores();
 };
 

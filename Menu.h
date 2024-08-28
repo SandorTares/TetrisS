@@ -11,10 +11,11 @@
 class Menu {
 protected:
     void doGameLoop();
+    void drawMenuEntries(int startX, int draw_starting_y, const char draw_entry1_text[], const char draw_entry2_text[], const char draw_entry3_text[]);
     void updateScores(int newScore);
-    void drawMenuEntries(int startX, int startY, const char entry1[], const char entry2[], const char entry3[]);
+    ScoreBoard scoreBoard; //Prepare the scoreboard class that handles score and drawing them
 public:
-    void menuLoop();
+    void doMenuLoop();
 };
 
 

@@ -19,8 +19,9 @@ protected:
     block blocks[TETRAMINO_BLOCKS]{}; //The array of blocks that make a tetramino, usually 4
 public:
     block getBlockPos(int n);
+    block getBlockPosRelative(int n);
     void changePos(int deltaX, int deltaY);
-    void rotateBlocks(bool clockwise); //Function to rotate the tetramino
+    void doBlocksRotation(bool clockwise); //Function to doRotation the tetramino
     explicit Tetramino(int _x = 0, int _y = 0)
     {
         x = _x;

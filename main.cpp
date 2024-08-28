@@ -1,18 +1,18 @@
 #include "Menu.h"
 #include "ctime"
 
-void startNcurses();
+void start_ncurses();
 
 int main() {
-    startNcurses(); //Start Ncurses
+    start_ncurses(); //Start Ncurses
     srand(time(nullptr)); //Random seed
     Menu menu = Menu(); //New menu instance
-    menu.menuLoop(); //Start menu
+    menu.doMenuLoop(); //Start menu
     return 0;
 }
 
 
-void startNcurses() //Ncurses initialization
+void start_ncurses() //Ncurses initialization
 {
     initscr(); //Screen initialization
     refresh(); //Refresh (Update) Screen

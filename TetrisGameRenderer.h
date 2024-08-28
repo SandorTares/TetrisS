@@ -14,7 +14,7 @@ protected:
     int posX{0}, posY{0};
 public:
     TetrisLogicController logicController;
-    void gameLoop();
+    int doGameLoop();
     TetrisGameRenderer(){
         int gridWindowWidth, gridWindowHeight,scoreWindowWidth,scoreWindowHeight, predictionWindowHeight, predictionWindowWidth;
         scoreWindowWidth = (TETRAMINO_BLOCKS + 2) * GRAPHICS_BLOCK_WIDTH + GRAPHICS_BORDERS_SIZE;

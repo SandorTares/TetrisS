@@ -12,7 +12,7 @@ struct cell{
 };
 
 struct cell_row{
-    cell gridColumns[GRID_WIDTH]{}; //X axis
+    cell gridAxisX[GRID_WIDTH]{}; //X axis
     int filled {0};
 };
 
@@ -22,14 +22,14 @@ cell solidCell();
 class Grid {
 
 protected:
-    cell_row gridRows[GRID_HEIGHT]{}; //Y axis
-    void setCellEmpty(int _x, int _y);
-    void setRowEmpty(int _y);
-    void shiftRowsDown(int _starting_y);
+    cell_row gridAxisY[GRID_HEIGHT]{}; //Y axis
+    void setCellEmpty(int cellX, int cellY);
+    void setRowEmpty(int rowY);
+    void shiftRowsDown(int startingRowY);
 
 public:
-    cell getCellState(int _x, int _y);
-    void setCellState(int _x, int _y, bool _filled, bool _solid);
+    cell getCellState(int cellX, int cellY);
+    void setCellState(int cellX, int cellY, bool cellFilled, bool cellSolid);
     void incrementRowFilledCount(int row);
     int emptyFilledRows();
     Grid() = default;
