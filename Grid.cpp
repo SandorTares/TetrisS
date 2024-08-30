@@ -34,7 +34,7 @@ void Grid::setRowEmpty(int rowY) {
     gridAxisY[rowY].filled = 0;
 }
 
-//Shifts all the rows down starting from the indicated y coordinate, used when eleminating filled rows
+//Shifts all the rows down starting from the indicated y coordinate, used when eliminating filled rows
 void Grid::shiftRowsDown(int startingRowY) {
 
     for (int _y = startingRowY; _y > 0; --_y) {

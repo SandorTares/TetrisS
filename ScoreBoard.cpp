@@ -22,6 +22,7 @@ void correctNonNumberScore(char score[]){
 //Reads the save file and adds the name and score pairs to the score list
 void ScoreBoard::readScoresFile() {
     inputFile.open(GAME_SAVE_NAME);
+    if (!inputFile.is_open()) return;
     char name[SCORE_MAX_NAME + 1] {""};
     char score[SCORE_MAX_NAME + 1] {""};
 
@@ -36,10 +37,12 @@ void ScoreBoard::readScoresFile() {
 
 //Writes the name and score pairs from the score list to the save file
 void ScoreBoard::writeScoresFile() {//Simple printing to file of the names and scores
+    if (scoreList == nullptr) return; // Nothing to save
     outputFile.open(GAME_SAVE_NAME);
     p_scoreList temp = scoreList;
     for (int i = 0; i < SCORE_MAX_ENTRIES && temp != nullptr; ++i) {
-            outputFile<<temp->name<<":"<<temp->score<<'\n';
+            outputFile<<temp->name<<":"<<temp->score;
+            if (temp->next != nullptr) outputFile<<'\n'; //Prepare new line for next entry if it exists
             temp=temp->next;
     }
     outputFile.close();
@@ -86,6 +89,7 @@ void ScoreBoard::updateScoreFile(int newScore) {
 //Function used to accept a player name for the most recent score when saving it
 void ScoreBoard::insertScoreName(int score) {
     char _input = ' ';
+    wclear(inputWindow); //Clear old contents
     timeout(-1); //Stop timeout so that we wait indefinitely for inputs from the player
     box(inputWindow,0,0);
     mvwprintw(inputWindow, 1,1,"Name: %s", playerName);

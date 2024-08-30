@@ -12,7 +12,6 @@
 struct scoreEntry{
     char name[SCORE_MAX_NAME + 1] {""};
     int score {0};
-    bool filled {false};
     scoreEntry* next = nullptr;
 };
 
@@ -30,7 +29,6 @@ protected:
  void writeScoresFile();
  void insertScoreToList(char name[], int score);
  void insertScoreName(int score);
-
 public:
     ScoreBoard(){
      inputWindow = newwin(4, SCORE_MAX_NAME * 3, 0, 0);
