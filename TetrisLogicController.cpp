@@ -118,14 +118,14 @@ bool TetrisLogicController::isGameOver() {
 //Makes the player controlled tetramino visible on the grid without it having collisions
 void TetrisLogicController::makeTetraminoVisible() {
     for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
-        currentGrid.setCellState(currentPiece.getBlockPos(i).x , currentPiece.getBlockPos(i).y, true, false);
+        currentGrid.setCellState(currentPiece.getBlockPos(i).x , currentPiece.getBlockPos(i).y, true, false, currentPiece.getColor());
     }
 }
 
 //Erases the player controlled tetramino, used during movement to delete the tetramino from the old position
 void TetrisLogicController::eraseTetramino() {
     for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
-        currentGrid.setCellState(currentPiece.getBlockPos(i).x , currentPiece.getBlockPos(i).y, false, false);
+        currentGrid.setCellState(currentPiece.getBlockPos(i).x , currentPiece.getBlockPos(i).y, false, false, GRAPHICS_WHITE);
     }
 }
 
@@ -133,7 +133,7 @@ void TetrisLogicController::eraseTetramino() {
 //and is no longer controlled by the player
 void TetrisLogicController::makeTetraminoStatic() {
     for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
-        currentGrid.setCellState(currentPiece.getBlockPos(i).x , currentPiece.getBlockPos(i).y, true, true);
+        currentGrid.setCellState(currentPiece.getBlockPos(i).x , currentPiece.getBlockPos(i).y, true, true,currentPiece.getColor());
     }
 }
 

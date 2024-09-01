@@ -131,8 +131,9 @@ void ScoreBoard::renderScores() {
             mvprintw(3+i*2, _draw_middle_x, "Name: %s - Score: %d", temp->name, temp->score);
             temp=temp->next;
     }
+    attron(COLOR_PAIR(GRAPHICS_RED));
     mvprintw(5 + SCORE_MAX_NAME * 2, (int) (_draw_middle_x * 1.5), MENU_EXIT_SELECTED);
-
+    attroff(COLOR_PAIR(GRAPHICS_RED));
     while (getch()!='\n');
     clear();
 }

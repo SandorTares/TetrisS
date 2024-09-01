@@ -16,9 +16,9 @@ cell solidCell() {
 }
 
 //Sets the state of desired grid cell
-void Grid::setCellState(int cellX, int cellY, bool cellFilled, bool cellSolid) {
+void Grid::setCellState(int cellX, int cellY, bool cellFilled, bool cellSolid, int cellColor) {
     if (cellY >= GRID_HEIGHT || cellY < 0 || cellX < 0 || cellX >= GRID_WIDTH) return;
-    gridAxisY[cellY].gridAxisX[cellX] = {cellFilled, cellSolid};
+    gridAxisY[cellY].gridAxisX[cellX] = {cellFilled, cellSolid, cellColor};
 }
 
 //Empties the desired grid cell

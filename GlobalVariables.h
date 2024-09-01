@@ -27,10 +27,10 @@
                    "        [##]          [##][##][##][##]          [##]          [##]        [##]    [##][##][##][##]    [##][##][##][##]\n" \
                    "        [##]          [##][##][##][##]          [##]          [##]        [##]    [##][##][##][##]    [##][##][##][##]"
 
-#define MENU_NEWGAME "Start Game"
-#define MENU_SCORES "View Scores"
-#define MENU_EXIT "End Game"
-#define MENU_EXIT_SELECTED "-> Exit"
+#define MENU_NEWGAME "  Start Game"
+#define MENU_SCORES " View  Scores"
+#define MENU_EXIT "  End  Game"
+#define MENU_EXIT_SELECTED "-Press enter to return to menu-"
 
 /*Scoreboard*/
 #define SCORE_MAX_NAME 10
@@ -42,7 +42,13 @@
 #define GRAPHICS_EMPTY " . "
 #define GRAPHICS_FILLED "[#]"
 #define GRAPHICS_BORDERS_SIZE 2
-
+#define GRAPHICS_RED 1
+#define GRAPHICS_WHITE 2
+#define GRAPHICS_YELLOW 3
+#define GRAPHICS_GREEN 4
+#define GRAPHICS_CYAN 5
+#define GRAPHICS_BLUE 6
+#define GRAPHICS_MAGENTA 7
 /*Tetramino*/
 #define TETRAMINO_BLOCKS 4
 #define TETRAMINO_VARIATIONS 7

@@ -42,3 +42,8 @@ void Tetramino::changePos(int deltaX, int deltaY) {
         x+=deltaX;
         y+=deltaY;
 }
+
+//Returns tetramino color
+int Tetramino::getColor() {
+    return color;
+}

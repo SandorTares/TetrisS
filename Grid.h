@@ -9,6 +9,7 @@
 
 struct cell{
     bool filled{false}, solid{false};
+    int color = GRAPHICS_WHITE;
 };
 
 struct cell_row{
@@ -29,7 +30,7 @@ protected:
 
 public:
     cell getCellState(int cellX, int cellY);
-    void setCellState(int cellX, int cellY, bool cellFilled, bool cellSolid);
+    void setCellState(int cellX, int cellY, bool cellFilled, bool cellSolid, int cellColor);
     void incrementRowFilledCount(int row);
     int emptyFilledRows();
     Grid() = default;

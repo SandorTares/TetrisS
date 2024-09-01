@@ -16,16 +16,25 @@ class Tetramino {
 
 protected:
     int x,y; //The x and y position of the origin of the tetramino
+    int color;
     block blocks[TETRAMINO_BLOCKS]{}; //The array of blocks that make a tetramino, usually 4
 public:
     block getBlockPos(int n);
     block getBlockPosRelative(int n);
+    int getColor();
     void changePos(int deltaX, int deltaY);
     void doBlocksRotation(bool clockwise); //Function to doRotation the tetramino
-    explicit Tetramino(int _x = 0, int _y = 0)
+    Tetramino()
+    {
+        x = 0;
+        y = 0;
+        color = GRAPHICS_WHITE;
+    }
+    Tetramino(int _x, int _y)
     {
         x = _x;
         y = _y;
+        color = GRAPHICS_WHITE;
     }
 
 };
@@ -33,6 +42,7 @@ public:
 class TetraminoI:public Tetramino
 {
     public:TetraminoI(int x, int y) : Tetramino(x, y) {
+        color = GRAPHICS_BLUE;
         blocks[0] = {-1, 0};
         blocks[1] = {0,0};
         blocks[2] = {1, 0};
@@ -43,6 +53,7 @@ class TetraminoI:public Tetramino
 class TetraminoO:public Tetramino
 {
     public:TetraminoO(int x, int y) : Tetramino(x, y) {
+        color = GRAPHICS_YELLOW;
         blocks[0] = {0, 0};
         blocks[1] = {1,0};
         blocks[2] = {0, 1};
@@ -52,6 +63,7 @@ class TetraminoO:public Tetramino
 class TetraminoS:public Tetramino
 {
 public:TetraminoS(int x, int y) : Tetramino(x, y) {
+        color = GRAPHICS_RED;
         blocks[0] = {0, 0};
         blocks[1] = {1,0};
         blocks[2] = {0, 1};
@@ -63,6 +75,7 @@ public:TetraminoS(int x, int y) : Tetramino(x, y) {
 class TetraminoZ:public Tetramino
 {
 public:TetraminoZ(int x, int y) : Tetramino(x, y) {
+        color = GRAPHICS_CYAN;
         blocks[0] = {-1, 0};
         blocks[1] = {0,0};
         blocks[2] = {0, 1};
@@ -74,6 +87,7 @@ public:TetraminoZ(int x, int y) : Tetramino(x, y) {
 class TetraminoL:public Tetramino
 {
 public:TetraminoL(int x, int y) : Tetramino(x, y) {
+        color = GRAPHICS_GREEN;
         blocks[0] = {-1, 0};
         blocks[1] = {0,0};
         blocks[2] = {1, 0};
@@ -83,6 +97,7 @@ public:TetraminoL(int x, int y) : Tetramino(x, y) {
 class Tetraminol:public Tetramino
 {
 public:Tetraminol(int x, int y) : Tetramino(x, y) {
+        color = GRAPHICS_MAGENTA;
         blocks[0] = {-1, 0};
         blocks[1] = {0,0};
         blocks[2] = {1, 0};
@@ -93,6 +108,7 @@ public:Tetraminol(int x, int y) : Tetramino(x, y) {
 class TetraminoT:public Tetramino
 {
 public:TetraminoT(int x, int y) : Tetramino(x, y) {
+        color = GRAPHICS_WHITE;
         blocks[0] = {-1, 0};
         blocks[1] = {0,0};
         blocks[2] = {1, 0};
