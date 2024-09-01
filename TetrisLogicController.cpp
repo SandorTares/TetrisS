@@ -140,23 +140,27 @@ void TetrisLogicController::makeTetraminoStatic() {
 //Reads player inputs (press "a" or "A" to doMove left, etc...)
 void TetrisLogicController::gameFrame() {
 
-        char _input = getch();
-
+        int _input = getch();
+        if (_input != ERR) napms(GAME_FRAMERATE/3);
         switch (_input) {
             case 'a':
             case 'A':
+            case KEY_LEFT:
                 doMove(VECTOR_LEFT);
                 break;
             case 'd':
             case 'D':
+            case KEY_RIGHT:
                 doMove(VECTOR_RIGHT);
                 break;
             case 'w':
             case 'W':
+            case KEY_UP:
                 doRotation(true);
                 break;
             case 's':
             case 'S':
+            case KEY_DOWN:
                 moveDown();
                 break;
             default:

@@ -16,12 +16,21 @@
 
 /*Menu*/
 #define MENU_OPTIONS_NUMBER 3
-#define MENU_NEWGAME "New Game"
-#define MENU_NEWGAME_SELECTED "-> NEW GAME"
-#define MENU_SCORES "View Scoreboard"
-#define MENU_SCORES_SELECTED "-> VIEW SCOREBOARD"
+#define MENU_TITLE "  [##][##][##][##]    [##][##][##][##]    [##][##][##][##]    [##][##][##][##]    [##][##][##][##]    [##][##][##][##]\n" \
+                   "  [##][##][##][##]    [##][##][##][##]    [##][##][##][##]    [##][##][##][##]    [##][##][##][##]    [##][##][##][##]\n" \
+                   "        [##]          [##]                      [##]          [##]        [##]          [##]          [##]            \n" \
+                   "        [##]          [##]                      [##]          [##]        [##]          [##]          [##]            \n" \
+                   "        [##]          [##][##][##][##]          [##]          [##][##][##][##]          [##]          [##][##][##][##]\n" \
+                   "        [##]          [##][##][##][##]          [##]          [##][##][##][##]          [##]          [##][##][##][##]\n" \
+                   "        [##]          [##]                      [##]          [##]    [##]              [##]                      [##]\n" \
+                   "        [##]          [##]                      [##]          [##]    [##]              [##]                      [##]\n" \
+                   "        [##]          [##][##][##][##]          [##]          [##]        [##]    [##][##][##][##]    [##][##][##][##]\n" \
+                   "        [##]          [##][##][##][##]          [##]          [##]        [##]    [##][##][##][##]    [##][##][##][##]"
+
+#define MENU_NEWGAME "Start Game"
+#define MENU_SCORES "View Scores"
 #define MENU_EXIT "End Game"
-#define MENU_EXIT_SELECTED "-> END GAME"
+#define MENU_EXIT_SELECTED "-> Exit"
 
 /*Scoreboard*/
 #define SCORE_MAX_NAME 10
