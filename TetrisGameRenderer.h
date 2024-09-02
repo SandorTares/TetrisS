@@ -1,7 +1,3 @@
-//
-// Created by onitn on 11/14/2023.
-//
-
 #ifndef TETRISS_TETRISGAMERENDERER_H
 #define TETRISS_TETRISGAMERENDERER_H
 

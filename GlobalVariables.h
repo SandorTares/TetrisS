@@ -1,7 +1,3 @@
-//
-// Created by onitn on 2/20/2024.
-//
-
 #ifndef TETRISS_GLOBALVARIABLES_H
 #define TETRISS_GLOBALVARIABLES_H
 

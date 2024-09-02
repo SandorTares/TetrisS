@@ -1,7 +1,3 @@
-//
-// Created by onitn on 11/14/2023.
-//
-
 #include "Grid.h"
 
 //Returns the equivalent of an empty cell
@@ -17,13 +13,15 @@ cell solidCell() {
 
 //Sets the state of desired grid cell
 void Grid::setCellState(int cellX, int cellY, bool cellFilled, bool cellSolid, int cellColor) {
-    if (cellY >= GRID_HEIGHT || cellY < 0 || cellX < 0 || cellX >= GRID_WIDTH) return;
-    gridAxisY[cellY].gridAxisX[cellX] = {cellFilled, cellSolid, cellColor};
+    if (cellX < GRID_WIDTH && cellX >= 0 && cellY < GRID_HEIGHT && cellY >= 0) {
+        gridAxisY[cellY].gridAxisX[cellX] = {cellFilled, cellSolid, cellColor};
+    }
 }
 
 //Empties the desired grid cell
 void Grid::setCellEmpty(int cellX, int cellY) {
-    gridAxisY[cellY].gridAxisX[cellX] = emptyCell();
+    if (cellX<GRID_WIDTH && cellX>=0 && cellY<GRID_HEIGHT && cellY>=0)
+        gridAxisY[cellY].gridAxisX[cellX]= emptyCell();
 }
 
 //Empties the desired grid row
@@ -45,23 +43,28 @@ void Grid::shiftRowsDown(int startingRowY) {
 
 //Returns the state of the desired grid cell
 cell Grid::getCellState(int cellX, int cellY) {
-    if (cellY >= GRID_HEIGHT || cellX < 0 || cellX >= GRID_WIDTH) return solidCell();
-    if (cellY < 0) return emptyCell();
-    return gridAxisY[cellY].gridAxisX[cellX];
+    if (cellY<0)
+        return emptyCell();
+    else if (cellY>=GRID_HEIGHT || (cellY>0 && (cellX<0 || cellX>=GRID_WIDTH)))
+        return solidCell();
+    else
+        return gridAxisY[cellY].gridAxisX[cellX];
 }
 
-//Changes how filled a row is
-void Grid::incrementRowFilledCount(int row) {
-    gridAxisY[row].filled+=1;
+//Changes how filled a rowY is
+void Grid::incrementRowFilledCount(int rowY) {
+    if (rowY<GRID_HEIGHT && rowY>=0)
+        gridAxisY[rowY].filled+=1;
 }
 
 //Empties all filled rows
 int Grid::emptyFilledRows() {
-    int count = 0;
+    int num_full = 0;
     for (int i = 0; i < GRID_HEIGHT; ++i) {
-        if (gridAxisY[i].filled >= GRID_WIDTH) {shiftRowsDown(i);
-        count+=1;
+        if (gridAxisY[i].filled >= GRID_WIDTH) {
+            shiftRowsDown(i);
+            num_full+=1;
         }
     }
-    return count;
+    return num_full;
 }

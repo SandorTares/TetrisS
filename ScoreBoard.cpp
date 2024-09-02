@@ -1,7 +1,3 @@
-//
-// Created by onitn on 11/15/2023.
-//
-
 #include "ScoreBoard.h"
 using namespace std;
 
@@ -88,12 +84,13 @@ void ScoreBoard::updateScoreFile(int newScore) {
 
 //Function used to accept a player name for the most recent score when saving it
 void ScoreBoard::insertScoreName(int score) {
-    char _input = ' ';
-    wclear(inputWindow); //Clear old contents
+    curs_set(1); //Add text cursor (blinking line)
     timeout(-1); //Stop timeout so that we wait indefinitely for inputs from the player
+    int _input = ' ';
+    wclear(inputWindow); //Clear old contents
     box(inputWindow,0,0);
-    mvwprintw(inputWindow, 1,1,"Name: %s", playerName);
     mvwprintw(inputWindow, 2,1,"Score: %d", score);
+    mvwprintw(inputWindow, 1,1,"Name: %s", playerName);
     refresh();
     wrefresh(inputWindow);
     while (_input != '\n')
@@ -108,16 +105,17 @@ void ScoreBoard::insertScoreName(int score) {
             playerName[insertedNameLength] = _input;
             insertedNameLength++;
             }
-        } else if (insertedNameLength > 0 && _input != '\n') //Anything other than enter and letters functions as backspace
+        } else if (insertedNameLength > 0 && (_input == '\b' || _input==KEY_BACKSPACE))
         {
             insertedNameLength--;
             playerName[insertedNameLength] = '\0';
             wclear(inputWindow);
         }
-        mvwprintw(inputWindow, 1,1,"Name: %s", playerName);
         mvwprintw(inputWindow, 2,1,"Score: %d", score);
+        mvwprintw(inputWindow, 1,1,"Name: %s", playerName);
     }
     timeout(GAME_FRAMERATE); //Reset timeout
+    curs_set(0); //Remove text cursor (blinking line)
 }
 
 //Draws the top scores to the screen

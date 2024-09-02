@@ -1,7 +1,3 @@
-//
-// Created by onitn on 11/14/2023.
-//
-
 #include "Tetramino.h"
 
 using namespace std;

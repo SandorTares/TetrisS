@@ -1,7 +1,3 @@
-//
-// Created by onitn on 11/14/2023.
-//
-
 #ifndef TETRISS_GRID_H
 #define TETRISS_GRID_H
 #include "GlobalVariables.h"
@@ -31,7 +27,7 @@ protected:
 public:
     cell getCellState(int cellX, int cellY);
     void setCellState(int cellX, int cellY, bool cellFilled, bool cellSolid, int cellColor);
-    void incrementRowFilledCount(int row);
+    void incrementRowFilledCount(int rowY);
     int emptyFilledRows();
     Grid() = default;
 };

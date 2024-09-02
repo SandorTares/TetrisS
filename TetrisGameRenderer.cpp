@@ -1,7 +1,3 @@
-//
-// Created by onitn on 11/14/2023.
-//
-
 #include "TetrisGameRenderer.h"
 
 //Starts the game screen drawing and executes the game logic using TetrisLogicController

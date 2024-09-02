@@ -1,7 +1,3 @@
-//
-// Created by onitn on 11/15/2023.
-//
-
 #include "Menu.h"
 
 //Start the main menu execution loop

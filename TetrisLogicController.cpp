@@ -1,7 +1,3 @@
-//
-// Created by onitn on 11/14/2023.
-//
-
 #include "TetrisLogicController.h"
 
 //Chooses the next tetramino that will be used

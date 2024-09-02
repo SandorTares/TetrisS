@@ -1,7 +1,3 @@
-//
-// Created by onitn on 11/14/2023.
-//
-
 #ifndef TETRISS_TETRAMINO_H
 #define TETRISS_TETRAMINO_H
 #include "iostream"

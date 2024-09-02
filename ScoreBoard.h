@@ -1,7 +1,3 @@
-//
-// Created by onitn on 11/15/2023.
-//
-
 #ifndef TETRISS_SCOREBOARD_H
 #define TETRISS_SCOREBOARD_H
 #include "cstring"
@@ -31,7 +27,7 @@ protected:
  void insertScoreName(int score);
 public:
     ScoreBoard(){
-     inputWindow = newwin(4, SCORE_MAX_NAME * 3, 0, 0);
+     inputWindow = newwin(4, SCORE_MAX_NAME * 2, 0, 0);
         readScoresFile();//Read the scores from the save file
     }
     void freeMemory();
