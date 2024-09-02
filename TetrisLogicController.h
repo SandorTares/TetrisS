@@ -21,7 +21,7 @@ protected:
     void doRotation(bool clockwise);
     void doTetraminoPlacement();
     void makeTetraminoVisible();
-    void makeTetraminoStatic();
+    void makeTetraminoSolid();
     void eraseTetramino();
 
 public:

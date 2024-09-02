@@ -4,15 +4,15 @@ using namespace std;
 //Rotates the given x and y cordinates around (0,0) by 90 degrees
 void doCoordinateRotation(int& x, int& y, bool clockwise)
 {
-    if (clockwise)
-    {
-        swap(x,y);
-        y=-y;
+    if (clockwise){
+        int tmp=-x;
+        x=y;
+        y=tmp;
     }
-    else
-    {
-        swap(x,y);
-        x=-x;
+    else {
+        int tmp=-y;
+        y=x;
+        x=tmp;
     }
 }
 
@@ -30,16 +30,21 @@ block Tetramino::getBlockPos(int n) {
 
 //Returns the coordinates relative to the tetramino origin for the n-th block
 block Tetramino::getBlockPosRelative(int n) {
-    return {blocks[n].x, blocks[n].y};
-}
-
-//Changes the position of the tetramino origin
-void Tetramino::changePos(int deltaX, int deltaY) {
-        x+=deltaX;
-        y+=deltaY;
+    if(n>=TETRAMINO_BLOCKS || n<0){
+        return blocks[0];
+    }else{
+        return blocks[n];
+    }
 }
 
 //Returns tetramino color
 int Tetramino::getColor() {
     return color;
 }
+
+//Changes the position of the tetramino origin
+void Tetramino::changePos(int deltaX, int deltaY) {
+        x=x+deltaX;
+        y=y+deltaY;
+}
+

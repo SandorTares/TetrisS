@@ -13,7 +13,7 @@ protected:
     void drawMenuStart(int draw_starting_x, int draw_starting_y);
     void drawMenuScore(int draw_starting_x, int draw_starting_y);
     void drawMenuExit(int draw_starting_x, int draw_starting_y);
-    void drawMenuDecoration(int draw_starting_y);
+    void drawMenuBackground(int draw_starting_y);
     void updateScores(int newScore);
     ScoreBoard scoreBoard; //Prepare the scoreboard class that handles score and drawing them
 public:

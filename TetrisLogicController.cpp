@@ -42,19 +42,23 @@ void TetrisLogicController::changeTetramino() {
 
 //Checks if move is possible
 bool TetrisLogicController::canMove(int deltaX, int deltaY) {
-    bool temp = true;
-
-    for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
-        temp = temp && !currentGrid.getCellState(currentPiece.getBlockPos(i).x + deltaX,
-                                                 currentPiece.getBlockPos(i).y + deltaY).solid;
+    for(int i=0;i<TETRAMINO_BLOCKS;i++){
+        bool flag;
+        block tmp;
+        tmp=currentPiece.getBlockPos(i);
+        flag=currentGrid.getCellState(tmp.x+deltaX,tmp.y+deltaY).solid;
+        if(flag){
+            return false;
+        }
     }
-    return temp;
+    return true;
 }
 
 //Makes movement after verifying that it is possible
 void TetrisLogicController::doMove(int deltaX, int deltaY) {
-    if (canMove(deltaX, deltaY))
-    {
+    bool flag;
+    flag= canMove(deltaX, deltaY);
+    if(flag){
         eraseTetramino();
         currentPiece.changePos(deltaX, deltaY);
         makeTetraminoVisible();
@@ -68,7 +72,7 @@ void TetrisLogicController::moveDown() {
         doMove(VECTOR_DOWN);
     } else
     {
-        makeTetraminoStatic();
+        makeTetraminoSolid();
         doTetraminoPlacement();
         gameOver = !canMove(VECTOR_ZERO);
     }
@@ -78,7 +82,9 @@ void TetrisLogicController::moveDown() {
 //checks for completed lines and changes to the next tetramino
 void TetrisLogicController::doTetraminoPlacement() {
     for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
-        currentGrid.incrementRowFilledCount(currentPiece.getBlockPos(i).y);
+        block tmp;
+        tmp=currentPiece.getBlockPos(i);
+        currentGrid.incrementRowFilledCount(tmp.y);
     }
     int filledLines = currentGrid.emptyFilledRows(); // Score
     completedRows+=filledLines;
@@ -88,18 +94,17 @@ void TetrisLogicController::doTetraminoPlacement() {
 
 //Checks if a rotation is valid and does not overlap with anything else
 bool TetrisLogicController::canRotate(bool clockwise) {
-
-    bool temp;
     currentPiece.doBlocksRotation(clockwise);
-    temp = canMove(VECTOR_ZERO);
+    bool flag;
+    flag = canMove(0, 0);
     currentPiece.doBlocksRotation(!clockwise);
-    return temp;
+    return flag;
 }
-
 //Rotates a tetramino after checking if it is a valid rotation
 void TetrisLogicController::doRotation(bool clockwise) {
-    if(canRotate(clockwise))
-    {
+    bool flag;
+    flag= canRotate(clockwise);
+    if(flag){
         eraseTetramino();
         currentPiece.doBlocksRotation(clockwise);
         makeTetraminoVisible();
@@ -113,23 +118,29 @@ bool TetrisLogicController::isGameOver() {
 
 //Makes the player controlled tetramino visible on the grid without it having collisions
 void TetrisLogicController::makeTetraminoVisible() {
-    for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
-        currentGrid.setCellState(currentPiece.getBlockPos(i).x , currentPiece.getBlockPos(i).y, true, false, currentPiece.getColor());
+    for(int i=0;i<TETRAMINO_BLOCKS;i++){
+        block tmp;
+        tmp=currentPiece.getBlockPos(i);
+        currentGrid.setCellState(tmp.x,tmp.y,true,false,currentPiece.getColor());
     }
 }
 
 //Erases the player controlled tetramino, used during movement to delete the tetramino from the old position
 void TetrisLogicController::eraseTetramino() {
-    for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
-        currentGrid.setCellState(currentPiece.getBlockPos(i).x , currentPiece.getBlockPos(i).y, false, false, GRAPHICS_WHITE);
+    for(int i=0;i<TETRAMINO_BLOCKS;i++){
+        block tmp;
+        tmp=currentPiece.getBlockPos(i);
+        currentGrid.setCellState(tmp.x,tmp.y, false,false,GRAPHICS_WHITE);
     }
 }
 
 //Makes a tetramino static activating collision, used after a tetramino touches the bottom of the game grid
 //and is no longer controlled by the player
-void TetrisLogicController::makeTetraminoStatic() {
-    for (int i = 0; i < TETRAMINO_BLOCKS; i++) {
-        currentGrid.setCellState(currentPiece.getBlockPos(i).x , currentPiece.getBlockPos(i).y, true, true,currentPiece.getColor());
+void TetrisLogicController::makeTetraminoSolid() {
+    for(int i=0;i<TETRAMINO_BLOCKS;i++){
+        block tmp;
+        tmp=currentPiece.getBlockPos(i);
+        currentGrid.setCellState(tmp.x,tmp.y,true, true,currentPiece.getColor());
     }
 }
 

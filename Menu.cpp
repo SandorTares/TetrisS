@@ -13,7 +13,7 @@ void Menu::doMenuLoop() {
     //Wait for the enter key to be pressed and then control the _selected option
         while (_input != '\n') {
             drawMenuTitle(_draw_starting_y-8);
-            drawMenuDecoration(_draw_starting_y*2.5);
+            drawMenuBackground(_draw_starting_y * 2.5);
             drawMenuCursor(_draw_starting_x-10,_draw_starting_y+5+_selected*4);
             drawMenuEntries(_draw_starting_x, _draw_starting_y+5);
             box(stdscr, 0,0);
@@ -102,12 +102,9 @@ void Menu::updateScores(int newScore){
     scoreBoard.updateScoreFile(newScore);
 }
 
-void Menu::drawMenuDecoration(int draw_starting_y) {
+void Menu::drawMenuBackground(int draw_starting_y) {
     attron(COLOR_PAIR(GRAPHICS_RED));
-    mvprintw(draw_starting_y  , 0, "          [#][#]                                                                                              [#]\n"
-                                   " [#]         [#][#]   [#]                                                    [#][#][#][#][#]                  [#]   [#]\n"
-                                   " [#]   [#][#][#]      [#][#]   [#][#]            [#]                [#][#]      [#]   [#]         [#][#]      [#][#][#]\n"
-                                   " [#][#]   [#]            [#]   [#][#]      [#][#][#]                [#][#]   [#][#][#][#][#][#]      [#][#]   [#]   [#]");
+    mvprintw(draw_starting_y  , 0, MENU_BACKGROUND);
     attroff(COLOR_PAIR(GRAPHICS_RED));
 }
 
